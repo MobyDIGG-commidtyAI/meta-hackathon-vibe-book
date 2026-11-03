@@ -1156,6 +1156,12 @@ textarea.field {
   gap: 14px 20px;
 }
 
+.inline-mark {
+  display: inline-block;
+  vertical-align: -1px;
+  color: var(--lemon);
+}
+
 .land-aside {
   margin: 0;
   max-width: 40ch;

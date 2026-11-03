@@ -36,7 +36,7 @@ export default function Home() {
             <span className="sticker">Vibe it.</span>
           </h1>
           <p className="lede">
-            Tap ✦ Vibe on any Facebook post and it becomes something you can play, use and share. A sunrise on Everest
+            Tap <Spark size={14} className="inline-mark" /> Vibe on any Facebook post and it becomes something you can play, use and share. A sunrise on Everest
             turns into a snowboard run your friends can remix.
           </p>
           <div className="land-actions">
