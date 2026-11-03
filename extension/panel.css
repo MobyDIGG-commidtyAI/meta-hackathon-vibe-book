@@ -1,9 +1,8 @@
 :root {
-  --bg: #0d0b14;
-  --line: #2a2336;
-  --text: #f1edf7;
-  --muted: #9a90aa;
-  color-scheme: dark;
+  --bg: #d7322a;
+  --cap: #b5261f;
+  --text: #ffffff;
+  color-scheme: light;
 }
 
 * {
@@ -23,8 +22,8 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 16px;
-  border-bottom: 1px solid var(--line);
+  padding: 12px 16px;
+  background: var(--cap);
 }
 
 .brand {
@@ -33,16 +32,19 @@ header {
 }
 
 #close {
+  width: 34px;
+  height: 34px;
   border: 0;
-  background: none;
-  color: var(--muted);
-  font-size: 18px;
+  border-radius: 50%;
+  background: #fff;
+  color: #141414;
+  font-size: 16px;
   cursor: pointer;
 }
 
 #status {
   margin: 16px;
-  color: var(--muted);
+  font-weight: 700;
 }
 
 iframe {
@@ -63,4 +65,15 @@ body.ready iframe {
 body.ready header,
 body.ready #status {
   display: none;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+#close {
+  display: grid;
+  place-items: center;
 }
