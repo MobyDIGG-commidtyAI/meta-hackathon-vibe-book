@@ -1,0 +1,9 @@
+.env*.local
+.env
+node_modules/
+.next/
+.vercel/
+.DS_Store
+
+# context/ keeps the extracted slide images; the zip duplicates them
+context/*.zip
