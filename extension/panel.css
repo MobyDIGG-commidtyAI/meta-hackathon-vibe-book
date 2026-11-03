@@ -1,0 +1,66 @@
+:root {
+  --bg: #0d0b14;
+  --line: #2a2336;
+  --text: #f1edf7;
+  --muted: #9a90aa;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+#close {
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-size: 18px;
+  cursor: pointer;
+}
+
+#status {
+  margin: 16px;
+  color: var(--muted);
+}
+
+iframe {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: var(--bg);
+  visibility: hidden;
+}
+
+/* The web app draws its own header and close button once it has the post. */
+body.ready iframe {
+  visibility: visible;
+}
+
+body.ready header,
+body.ready #status {
+  display: none;
+}
