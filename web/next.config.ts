@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Keep the dev badge out of demo recordings.
+  devIndicators: false,
   async headers() {
     // The extension panel and the /app page call the API cross-origin.
     return [
