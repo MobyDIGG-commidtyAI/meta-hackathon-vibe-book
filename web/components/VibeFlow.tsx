@@ -1,15 +1,23 @@
 "use client";
 // The whole create flow, shared by the extension panel (/panel) and the no-install page (/app):
 // read post → 3 cards → build → smoke test (+1 auto-repair for apps) → change → share.
+// Drawn as a capsule machine: the post sits in the dome, the cards are toys A/B/C, building turns the crank,
+// and progress prints on a receipt slip.
 import { useCallback, useEffect, useRef, useState } from "react";
 import Player, { type PlayerStatus } from "./Player";
+import { Back, Check, Close, Copy, External, Retry, Spark } from "./Icons";
 import type { TraceStep } from "@/lib/ai";
 import type { PublicExperience, Suggestion } from "@/lib/store";
 
 export type Post = { image: string | null; caption: string; postUrl: string; platform: string };
 
-type Step = { text: string; status: "busy" | "done" | "fail" };
+type Step = { text: string; status: "busy" | "done" | "fail"; time?: string };
 type Vibe = { imageId: string | null; scene: { description: string; mood: string }; suggestions: Suggestion[] };
+
+const LETTERS = "ABC";
+
+// Newest change prints in full colour; each older one steps back.
+const stampAge = (age: number) => (age === 0 ? "new" : age === 1 ? "prev" : "old");
 
 async function api<T>(path: string, body: unknown, token?: string | null): Promise<T> {
   const res = await fetch(path, {
@@ -44,13 +52,14 @@ function saveName(name: string) {
 export default function VibeFlow({ post, onClose }: { post: Post; onClose?: () => void }) {
   const [steps, setSteps] = useState<Step[]>([]);
   const [vibe, setVibe] = useState<Vibe | null>(null);
-  const [building, setBuilding] = useState<Suggestion | null>(null);
+  const [chosenIndex, setChosenIndex] = useState<number | null>(null);
+  const [building, setBuilding] = useState(false);
   const [exp, setExp] = useState<PublicExperience | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [loaded, setLoaded] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<{ message: string; retry: () => void } | null>(null);
-  const [changes, setChanges] = useState<string[]>([]);
+  const [changeLog, setChangeLog] = useState<string[][]>([]);
   const [unsupported, setUnsupported] = useState("");
   const [instruction, setInstruction] = useState("");
   const [name, setName] = useState("");
@@ -61,8 +70,8 @@ export default function VibeFlow({ post, onClose }: { post: Post; onClose?: () =
   const started = useRef(false);
 
   const push = (text: string) => setSteps((s) => [...s, { text, status: "busy" }]);
-  const settle = (status: Step["status"], text?: string) =>
-    setSteps((s) => s.map((step, i) => (i === s.length - 1 ? { text: text ?? step.text, status } : step)));
+  const settle = (status: Step["status"], text?: string, time?: string) =>
+    setSteps((s) => s.map((step, i) => (i === s.length - 1 ? { text: text ?? step.text, status, time } : step)));
 
   const read = useCallback(async () => {
     setError(null);
@@ -76,7 +85,7 @@ export default function VibeFlow({ post, onClose }: { post: Post; onClose?: () =
       });
       setVibe(data);
       setTrace((t) => [...t, ...data.trace]);
-      settle("done", `Read the post · ${secs(data.trace[0]?.ms ?? 0)}`);
+      settle("done", "Read the post", secs(data.trace[0]?.ms ?? 0));
     } catch (e) {
       settle("fail", `Couldn't read the post: ${errorText(e)}`);
       setError({ message: errorText(e), retry: read });
@@ -90,17 +99,19 @@ export default function VibeFlow({ post, onClose }: { post: Post; onClose?: () =
     read();
   }, [read]);
 
-  async function choose(card: Suggestion) {
+  async function choose(index: number) {
     if (!vibe) return;
+    const card = vibe.suggestions[index];
     setError(null);
-    setBuilding(card);
+    setChosenIndex(index);
+    setBuilding(true);
     setExp(null);
     setLoaded(false);
     setShareUrl(null);
-    setChanges([]);
+    setChangeLog([]);
     setUnsupported("");
     repaired.current = false;
-    push(card.kind === "game" ? `Designing ${card.title}…` : `Writing ${card.title}… (can take a minute)`);
+    push(card.kind === "game" ? `Designing ${card.title}…` : `Writing ${card.title}…`);
     try {
       const data = await api<{ editToken: string; experience: PublicExperience }>("/api/experiences", {
         imageId: vibe.imageId,
@@ -112,13 +123,13 @@ export default function VibeFlow({ post, onClose }: { post: Post; onClose?: () =
       setToken(data.editToken);
       setExp(data.experience);
       setTrace((t) => [...t, ...data.experience.trace]);
-      settle("done", `${card.kind === "game" ? "Spec valid" : "App written"} · ${secs(built?.ms ?? 0)}`);
+      settle("done", card.kind === "game" ? "Game designed" : "App written", secs(built?.ms ?? 0));
       push(card.kind === "game" ? "Loading the game…" : "Loading the app…");
     } catch (e) {
       settle("fail", `Couldn't build it: ${errorText(e)}`);
-      setError({ message: errorText(e), retry: () => choose(card) });
+      setError({ message: errorText(e), retry: () => choose(index) });
     } finally {
-      setBuilding(null);
+      setBuilding(false);
     }
   }
 
@@ -147,12 +158,12 @@ export default function VibeFlow({ post, onClose }: { post: Post; onClose?: () =
           push("Loading the app…");
         } catch (e) {
           settle("fail", `Couldn't fix it: ${errorText(e)}`);
-          setError({ message: "Try another card.", retry: backToCards });
+          setError({ message: "Try another toy.", retry: backToCards });
         }
         return;
       }
       settle("fail", `Didn't load: ${status.message}`);
-      setError({ message: "Try another card.", retry: backToCards });
+      setError({ message: "Try another toy.", retry: backToCards });
     },
     [exp, token],
   );
@@ -161,6 +172,8 @@ export default function VibeFlow({ post, onClose }: { post: Post; onClose?: () =
     setExp(null);
     setError(null);
     setShareUrl(null);
+    setChosenIndex(null);
+    setChangeLog([]);
   }
 
   async function change(e: React.FormEvent) {
@@ -176,13 +189,13 @@ export default function VibeFlow({ post, onClose }: { post: Post; onClose?: () =
         { instruction: text },
         token,
       );
-      settle("done", `Changed · ${secs(data.experience.trace.at(-1)?.ms ?? 0)}`);
+      settle("done", "Changed", secs(data.experience.trace.at(-1)?.ms ?? 0));
       push(exp.kind === "game" ? "Reloading the game…" : "Reloading the app…");
       setLoaded(false);
       repaired.current = false;
       setExp(data.experience);
       setTrace((t) => [...t, ...data.experience.trace.slice(-1)]);
-      setChanges(data.changeSummary);
+      if (data.changeSummary.length) setChangeLog((log) => [...log, data.changeSummary]);
       setUnsupported(data.unsupported);
       setInstruction("");
     } catch (err) {
@@ -217,136 +230,218 @@ export default function VibeFlow({ post, onClose }: { post: Post; onClose?: () =
     }
   }
 
+  const chosen = vibe && chosenIndex !== null ? vibe.suggestions[chosenIndex] : null;
+  const letter = chosenIndex !== null ? LETTERS[chosenIndex] : null;
+
   return (
-    <div className="flow">
-      <header className="flow-head">
-        <span className="brand">✦ VibeBook</span>
+    <div className="machine">
+      <header className="cap">
+        <span className="wordmark">
+          <Spark /> VibeBook
+        </span>
         {onClose && (
-          <button type="button" className="icon-btn" onClick={onClose} aria-label="Close">
-            ✕
+          <button type="button" className="knob" onClick={onClose} aria-label="Close">
+            <Close size={18} />
           </button>
         )}
       </header>
 
-      <div className="flow-body">
-        <ul className="steps">
-          {steps.map((s, i) => (
-            <li key={i} className={s.status}>
-              {s.text}
-            </li>
-          ))}
-        </ul>
+      <div className="body">
+        {!exp && (
+          <div className="dome-wrap">
+            <div className="dome">
+              {post.image ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={post.image} alt="The post photo" />
+              ) : (
+                <Spark size={56} />
+              )}
+            </div>
+            {vibe && <p className="scene-line">{vibe.scene.description}</p>}
+          </div>
+        )}
 
         {error && (
-          <div className="notice bad row">
-            <span style={{ flex: 1 }}>{error.message}</span>
-            <button type="button" className="btn ghost" onClick={error.retry}>
-              Try again
+          <div className="notice" role="alert">
+            <span className="bang">!</span>
+            <span>{error.message}</span>
+            <button type="button" className="btn ink" onClick={error.retry}>
+              <Retry size={16} /> Try again
             </button>
           </div>
         )}
 
-        {vibe && !exp && !building && (
-          <>
-            <p className="scene">{vibe.scene.description} What do you want to make?</p>
-            <div className="cards">
+        {vibe && !exp && (
+          <section className="sheet" aria-label="Things you can make">
+            <h2 className="sheet-title">Pick one to make</h2>
+            <div className={`toys${chosen ? " chosen" : ""}`}>
               {vibe.suggestions.map((card, i) => (
-                <button key={i} type="button" className="card" onClick={() => choose(card)}>
-                  <span className="card-emoji">{card.emoji}</span>
+                <button
+                  key={i}
+                  type="button"
+                  className={`toy${i === chosenIndex ? " is-chosen" : ""}`}
+                  onClick={() => choose(i)}
+                  disabled={building}
+                >
+                  <span className="toy-letter">{LETTERS[i]}</span>
+                  <span className={`capsule ${card.kind}`}>
+                    <span>{card.emoji}</span>
+                  </span>
                   <span>
-                    <span className="card-title">{card.title}</span>
-                    <span className="kind">{card.kind}</span>
-                    <div className="card-pitch">{card.pitch}</div>
+                    <span className="toy-title">
+                      {card.title}
+                      <span className={`tag ${card.kind}`}>{card.kind}</span>
+                    </span>
+                    <span className="toy-pitch">{card.pitch}</span>
                   </span>
                 </button>
               ))}
             </div>
-          </>
+          </section>
+        )}
+
+        {vibe && !exp && (
+          <div className="chute" aria-live="polite">
+            <span className={`crank${building ? " turning" : ""}`} aria-hidden="true" />
+            {building && chosen ? (
+              <>
+                <span className="chute-text">
+                  <strong>
+                    Making {letter}: {chosen.title}
+                  </strong>
+                  <span>{chosen.kind === "game" ? "Games take about 15 seconds" : "Apps take about a minute"}</span>
+                </span>
+                <span className={`capsule ${chosen.kind}`} aria-hidden="true">
+                  <span>{chosen.emoji}</span>
+                </span>
+              </>
+            ) : (
+              <>
+                <span className="chute-text">
+                  <strong>Tap A, B or C to turn the crank</strong>
+                </span>
+                <span className="slot" aria-hidden="true" />
+              </>
+            )}
+          </div>
         )}
 
         {exp && (
           <>
-            <Player id={exp.id} version={exp.version} onStatus={onStatus} />
-            <div>
-              <strong>{exp.title}</strong>
-              <div className="muted small">{exp.tagline}</div>
-            </div>
-            {changes.length > 0 && (
-              <div className="chips">
-                {changes.map((c) => (
-                  <span key={c} className="chip">
-                    {c}
-                  </span>
-                ))}
+            <div className="toy-window">
+              <div className={`toy-label ${exp.kind}`}>
+                {letter && <span className="toy-letter">{letter}</span>}
+                <strong>{exp.title}</strong>
+                <span className={`tag ${exp.kind}`}>{exp.kind}</span>
               </div>
-            )}
-            {unsupported && <div className="notice">{unsupported}</div>}
+              <Player id={exp.id} version={exp.version} kind={exp.kind} className="flow-player" onStatus={onStatus} />
+            </div>
+            <p className="scene-line">{exp.tagline}</p>
 
             {loaded && (
-              <form className="row" onSubmit={change}>
-                <input
-                  className="field"
-                  value={instruction}
-                  onChange={(e) => setInstruction(e.target.value)}
-                  placeholder={exp.kind === "game" ? "add a rocket boost and make it night" : "say what to change"}
-                  disabled={busy}
-                />
-                <button className="btn" disabled={busy || !instruction.trim()}>
-                  Change
-                </button>
+              <form className="form-sheet" onSubmit={change}>
+                <label htmlFor="vb-change">Change it in one line</label>
+                <div className="row">
+                  <input
+                    id="vb-change"
+                    className="field"
+                    value={instruction}
+                    onChange={(e) => setInstruction(e.target.value)}
+                    placeholder={exp.kind === "game" ? "add a rocket boost and make it night" : "say what to change"}
+                    disabled={busy}
+                  />
+                  <button className="btn" disabled={busy || !instruction.trim()}>
+                    Change
+                  </button>
+                </div>
+                {changeLog.length > 0 && (
+                  <div className="stamps" aria-label="Changes so far">
+                    {changeLog.map((set, i) =>
+                      set.map((c) => (
+                        <span key={`${i}-${c}`} className={`stamp ${stampAge(changeLog.length - 1 - i)}`}>
+                          {c}
+                        </span>
+                      )),
+                    )}
+                  </div>
+                )}
+                {unsupported && <p className="note">{unsupported}</p>}
               </form>
             )}
 
             {loaded && !shareUrl && (
-              <div className="row">
-                <input
-                  className="field"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Your name for the credit"
-                  maxLength={40}
-                />
-                <button type="button" className="btn" onClick={share} disabled={busy}>
-                  Share
-                </button>
+              <div className="form-sheet">
+                <label htmlFor="vb-name">Your name on the capsule</label>
+                <div className="row">
+                  <input
+                    id="vb-name"
+                    className="field"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="e.g. Ohm"
+                    maxLength={40}
+                  />
+                  <button type="button" className="btn ink" onClick={share} disabled={busy}>
+                    Share
+                  </button>
+                </div>
               </div>
             )}
 
             {shareUrl && (
-              <div className="share-box">
-                <strong>Your link is ready</strong>
+              <section className="form-sheet" aria-live="polite">
+                <div className="ticket-head">
+                  <h2>Your link is ready</h2>
+                </div>
                 <a className="link" href={shareUrl} target="_blank" rel="noopener">
                   {shareUrl}
                 </a>
                 <div className="row">
                   <button type="button" className="btn" onClick={copy}>
-                    {copied ? "Copied ✓" : "Copy link"}
+                    {copied ? <Check size={18} /> : <Copy size={18} />}
+                    {copied ? "Copied" : "Copy link"}
                   </button>
-                  <a className="btn ghost" href={shareUrl} target="_blank" rel="noopener">
-                    Open
+                  <a className="btn outline" href={shareUrl} target="_blank" rel="noopener">
+                    <External size={18} /> Open
                   </a>
                 </div>
-                <span className="muted small">Paste it in a Facebook post — friends can play it and remix it.</span>
-              </div>
+                <p className="note">Paste it in a Facebook post. Friends can play it and remix it.</p>
+              </section>
             )}
 
-            <button type="button" className="btn ghost" onClick={backToCards} disabled={busy}>
-              ← Other ideas
+            <button type="button" className="text-btn" onClick={backToCards} disabled={busy}>
+              <Back size={18} /> Other ideas
             </button>
           </>
         )}
 
-        {trace.length > 0 && (
-          <details className="trace" open>
-            <summary>Behind the scenes</summary>
-            <ul>
-              {trace.map((t, i) => (
-                <li key={i}>
-                  {t.ok ? "✓" : "✕"} {t.step} · {t.model} · {secs(t.ms)}
-                </li>
-              ))}
-            </ul>
-          </details>
+        {steps.length > 0 && (
+          <div className="receipt" aria-live="polite">
+            <div className="receipt-title">
+              <span>VibeBook slip</span>
+              <span>{exp ? `No. ${exp.id.slice(0, 6)}` : "No. ——"}</span>
+            </div>
+            {steps.map((s, i) => (
+              <div key={i} className={`rline ${s.status}`}>
+                <span className="mark">{s.status === "done" ? "✓" : s.status === "fail" ? "✕" : ""}</span>
+                <span>{s.text}</span>
+                <span>{s.time}</span>
+              </div>
+            ))}
+            {trace.length > 0 && (
+              <div className="receipt-trace" aria-label="Behind the scenes">
+                {trace.map((t, i) => (
+                  <div key={i} className="rline">
+                    <span className="mark">{t.ok ? "✓" : "✕"}</span>
+                    <span>
+                      {t.step} · {t.model}
+                    </span>
+                    <span>{secs(t.ms)}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         )}
       </div>
     </div>

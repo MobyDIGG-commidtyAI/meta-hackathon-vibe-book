@@ -7,3 +7,8 @@ node_modules/
 
 # context/ keeps the extracted slide images; the zip duplicates them
 context/*.zip
+
+# Impeccable working files (review captures, hook cache, decision-page logs)
+.impeccable/review/
+.impeccable/questions/
+.impeccable/hook.cache.json
