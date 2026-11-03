@@ -1,0 +1,456 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-03T12:42:10.769209+00:00",
+  "title": "Design System: VibeBook",
+  "extensions": {
+    "colorMeta": {
+      "machine-red": {
+        "role": "primary",
+        "displayName": "Machine Red",
+        "canonical": "oklch(57.7% 0.202 28.3)",
+        "tonalRamp": [
+          "#220000",
+          "#4e0000",
+          "#810003",
+          "#b90008",
+          "#e23e34",
+          "#ff7465",
+          "#ffb3a8",
+          "#ffe9e5"
+        ]
+      },
+      "red-hot": {
+        "role": "primary",
+        "displayName": "Hot Red",
+        "canonical": "oklch(60.7% 0.208 28.2)",
+        "tonalRamp": [
+          "#230000",
+          "#4e0000",
+          "#810003",
+          "#b90009",
+          "#e43a31",
+          "#fe7465",
+          "#feb3a8",
+          "#fee9e6"
+        ]
+      },
+      "red-deep": {
+        "role": "primary",
+        "displayName": "Top-Cap Red",
+        "canonical": "oklch(50.5% 0.180 28.5)",
+        "tonalRamp": [
+          "#220000",
+          "#4e0000",
+          "#810002",
+          "#b1211b",
+          "#d94b3f",
+          "#fe7465",
+          "#ffb3a8",
+          "#fee9e5"
+        ]
+      },
+      "red-ink": {
+        "role": "primary",
+        "displayName": "Printed Red",
+        "canonical": "oklch(47.6% 0.172 28.5)",
+        "tonalRamp": [
+          "#220000",
+          "#4e0000",
+          "#810002",
+          "#ae2720",
+          "#d64f42",
+          "#ff7464",
+          "#ffb3a8",
+          "#ffe9e5"
+        ]
+      },
+      "chute": {
+        "role": "primary",
+        "displayName": "Chute Maroon",
+        "canonical": "oklch(35.3% 0.124 28.5)",
+        "tonalRamp": [
+          "#230000",
+          "#4e0000",
+          "#761e17",
+          "#9b4037",
+          "#c16257",
+          "#e88578",
+          "#feb3a8",
+          "#fee9e6"
+        ]
+      },
+      "lemon": {
+        "role": "secondary",
+        "displayName": "Game Lemon",
+        "canonical": "oklch(86.1% 0.159 86.4)",
+        "tonalRamp": [
+          "#130900",
+          "#312300",
+          "#543e00",
+          "#7a5c00",
+          "#a37c04",
+          "#cd9d03",
+          "#f6c130",
+          "#ffedc5"
+        ]
+      },
+      "lemon-cream": {
+        "role": "secondary",
+        "displayName": "Lemon Cream",
+        "canonical": "oklch(96.4% 0.049 91.8)",
+        "tonalRamp": [
+          "#120a00",
+          "#2e2405",
+          "#4b4123",
+          "#6b6141",
+          "#8d8261",
+          "#b0a583",
+          "#d4c9a6",
+          "#faeeca"
+        ]
+      },
+      "lemon-faded": {
+        "role": "secondary",
+        "displayName": "Faded Lemon",
+        "canonical": "oklch(93.8% 0.080 90.3)",
+        "tonalRamp": [
+          "#130900",
+          "#302300",
+          "#523f00",
+          "#735f25",
+          "#958047",
+          "#b8a36a",
+          "#ddc88d",
+          "#ffeebe"
+        ]
+      },
+      "mint": {
+        "role": "tertiary",
+        "displayName": "App Mint",
+        "canonical": "oklch(73.7% 0.131 173.1)",
+        "tonalRamp": [
+          "#00100a",
+          "#002d23",
+          "#004e3e",
+          "#00725c",
+          "#00987c",
+          "#26bf9d",
+          "#5ae5c1",
+          "#beffea"
+        ]
+      },
+      "sky": {
+        "role": "tertiary",
+        "displayName": "Share Sky",
+        "canonical": "oklch(68.2% 0.172 252.9)",
+        "tonalRamp": [
+          "#000a25",
+          "#00254d",
+          "#00427e",
+          "#0061b4",
+          "#1f83e5",
+          "#5ca8ff",
+          "#a3cdff",
+          "#e4f0ff"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "oklch(19.1% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Ink Grey",
+        "canonical": "oklch(39.8% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "ink-3": {
+        "role": "neutral",
+        "displayName": "Ink Light",
+        "canonical": "oklch(52.8% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Landing headline only."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Landing section heads and page titles."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Display-card title, form-sheet heads, toy labels."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Default UI text."
+      },
+      "body-strong": {
+        "displayName": "Body Strong",
+        "purpose": "Toy titles, button labels, form labels."
+      },
+      "label": {
+        "displayName": "Kind Tag",
+        "purpose": "GAME / APP tags, uppercase."
+      },
+      "receipt": {
+        "displayName": "Receipt",
+        "purpose": "Receipt slip only: build steps and timings."
+      }
+    },
+    "shadows": [
+      {
+        "name": "lift",
+        "value": "0 18px 40px rgba(86, 4, 0, 0.36), 0 3px 8px rgba(86, 4, 0, 0.22)",
+        "purpose": "Paper resting on the machine: display card, form sheets, notices."
+      },
+      {
+        "name": "press",
+        "value": "inset 0 1px 0 rgba(255, 255, 255, 0.35), inset 0 -2px 0 rgba(0, 0, 0, 0.18), 0 4px 10px rgba(110, 10, 4, 0.32)",
+        "purpose": "Moulded buttons and the extension chip."
+      },
+      {
+        "name": "recess",
+        "value": "inset 0 6px 14px rgba(0, 0, 0, 0.45), 0 1px 0 rgba(255, 255, 255, 0.18)",
+        "purpose": "The chute."
+      },
+      {
+        "name": "dome-ring",
+        "value": "0 0 0 6px rgba(255, 255, 255, 0.2), 0 0 0 7.5px rgba(60, 4, 0, 0.55), 0 16px 30px rgba(86, 4, 0, 0.45)",
+        "purpose": "Clear acrylic rim around the post photo."
+      },
+      {
+        "name": "player",
+        "value": "0 20px 40px rgba(86, 4, 0, 0.42)",
+        "purpose": "Capsule player shell."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "The one easing for every state change."
+      },
+      {
+        "name": "crank-turn",
+        "value": "rotate 0 to 360deg, 1.1s ease-out",
+        "purpose": "Crank turns once when a toy is picked."
+      },
+      {
+        "name": "capsule-drop",
+        "value": "translateY(-70px) rotate(-40deg) to rest, 0.7s, 0.35s delay",
+        "purpose": "Capsule falls into the chute slot."
+      },
+      {
+        "name": "halves-part",
+        "value": "transform 0.75s ease-out, opacity 0.6s",
+        "purpose": "Capsule halves part to reveal the ready player."
+      },
+      {
+        "name": "shell-unseal",
+        "value": "border-radius 50% / 24% to 30px, 0.7s ease-out",
+        "purpose": "Sealed capsule shell becomes a rounded screen."
+      },
+      {
+        "name": "receipt-print",
+        "value": "clip-path reveal + translateY(-4px), 0.32s",
+        "purpose": "Live receipt lines print in; landing receipts are static."
+      },
+      {
+        "name": "cursor-blink",
+        "value": "1s steps(2, start), only while a step is busy",
+        "purpose": "Receipt print head cursor."
+      },
+      {
+        "name": "overlay-slide",
+        "value": "translateX(100%) to 0, 0.25s ease-out",
+        "purpose": "Extension overlay opening."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "all animation and transition 0.01ms",
+        "purpose": "prefers-reduced-motion respected globally."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "land-stack",
+        "value": "820px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Moulded machine-red pill for the main action on paper or in the flow.",
+      "html": "<button class=\"ds-btn\">Vibe a photo</button>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border:0;border-radius:999px;background:var(--red,#d7322a);color:#fff;font:800 15px/1.2 var(--font-ui,'M PLUS Rounded 1c'),system-ui,sans-serif;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -2px 0 rgba(0,0,0,.18),0 4px 10px rgba(110,10,4,.32);cursor:pointer;transition:transform .12s cubic-bezier(.16,1,.3,1),background .15s,box-shadow .12s}.ds-btn:hover{background:var(--red-hot,#e43a31)}.ds-btn:active{transform:translateY(1px);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 2px 4px rgba(110,10,4,.3)}.ds-btn:focus-visible{outline:3px solid var(--lemon,#ffc93c);outline-offset:2px}"
+    },
+    {
+      "name": "Light Button",
+      "kind": "button",
+      "refersTo": "button-light",
+      "description": "White pill with printed-red text; the main CTA on the red body.",
+      "html": "<div style=\"background:#d7322a;padding:20px\"><button class=\"ds-btn-light\">Try it</button></div>",
+      "css": ".ds-btn-light{padding:11px 18px;border:0;border-radius:999px;background:#fff;color:var(--red-ink,#a8201a);font:800 15px/1.2 var(--font-ui,'M PLUS Rounded 1c'),system-ui,sans-serif;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -2px 0 rgba(0,0,0,.18),0 4px 10px rgba(110,10,4,.32);cursor:pointer;transition:background .15s}.ds-btn-light:hover{background:var(--lemon-cream,#fff3cf)}.ds-btn-light:focus-visible{outline:3px solid #ffc93c;outline-offset:2px}"
+    },
+    {
+      "name": "Ink Button",
+      "kind": "button",
+      "refersTo": "button-ink",
+      "description": "Near-black pill for secondary actions on paper (Share, Retry).",
+      "html": "<button class=\"ds-btn-ink\">Share</button>",
+      "css": ".ds-btn-ink{padding:11px 18px;border:0;border-radius:999px;background:#141414;color:#fff;font:800 15px/1.2 var(--font-ui,'M PLUS Rounded 1c'),system-ui,sans-serif;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -2px 0 rgba(0,0,0,.18),0 4px 10px rgba(110,10,4,.32);cursor:pointer}.ds-btn-ink:hover{background:#2b2b2b}.ds-btn-ink:focus-visible{outline:3px solid #ffc93c;outline-offset:2px}"
+    },
+    {
+      "name": "Field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "White field with a 2px ink stroke and red caret, inside form sheets.",
+      "html": "<input class=\"ds-field\" placeholder=\"add a rocket boost\">",
+      "css": ".ds-field{width:100%;padding:10px 13px;border:2px solid #141414;border-radius:12px;background:#fff;color:#141414;caret-color:#d7322a;font:600 15px/1.5 var(--font-ui,'M PLUS Rounded 1c'),system-ui,sans-serif}.ds-field::placeholder{color:#6b6b6b;font-weight:500}.ds-field:focus-visible{outline:3px solid #ffc93c;outline-offset:2px}"
+    },
+    {
+      "name": "Top Cap",
+      "kind": "nav",
+      "refersTo": "knob",
+      "description": "Sticky red-deep header with the wordmark and the round close knob.",
+      "html": "<header class=\"ds-cap\"><span class=\"ds-mark\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"#ffc93c\" d=\"M12 1.5c.5 5.6 4.9 10 10.5 10.5-5.6.5-10 4.9-10.5 10.5-.5-5.6-4.9-10-10.5-10.5C7.1 11.5 11.5 7.1 12 1.5Z\"/></svg>VibeBook</span><button class=\"ds-knob\" aria-label=\"Close\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"><path d=\"M6 6l12 12M18 6L6 18\"/></svg></button></header>",
+      "css": ".ds-cap{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#b5261f;box-shadow:inset 0 -1px 0 rgba(255,255,255,.16),0 6px 14px rgba(86,4,0,.28)}.ds-mark{display:inline-flex;align-items:center;gap:7px;font:400 19px/1 var(--font-display,'Dela Gothic One'),sans-serif;color:#fff}.ds-knob{display:grid;place-items:center;width:34px;height:34px;border:0;border-radius:50%;background:#fff;color:#141414;box-shadow:inset 0 -2px 0 rgba(0,0,0,.12),0 3px 8px rgba(86,4,0,.35);cursor:pointer;transition:transform .15s cubic-bezier(.16,1,.3,1)}.ds-knob:hover{transform:rotate(90deg)}.ds-knob:focus-visible{outline:3px solid #ffc93c;outline-offset:2px}"
+    },
+    {
+      "name": "Kind Tags and Change Stamps",
+      "kind": "chip",
+      "refersTo": "kind-tag-game",
+      "description": "Kind tags (lemon GAME, mint APP) and change stamps stepping down by age.",
+      "html": "<span class=\"ds-tag\">Game</span> <span class=\"ds-tag ds-app\">App</span> <span class=\"ds-stamp ds-new\">faster</span> <span class=\"ds-stamp ds-prev\">+ obstacle</span> <span class=\"ds-stamp ds-old\">night</span>",
+      "css": ".ds-tag{display:inline-block;padding:1px 8px;border:1.5px solid #141414;border-radius:999px;background:#ffc93c;color:#141414;font:800 10.5px/1.5 var(--font-ui,'M PLUS Rounded 1c'),sans-serif;letter-spacing:.08em;text-transform:uppercase}.ds-tag.ds-app{background:#2fc4a2}.ds-stamp{display:inline-block;padding:3px 10px;border-radius:999px;font:800 12.5px/1.4 var(--font-ui,'M PLUS Rounded 1c'),sans-serif}.ds-new{background:#ffc93c;color:#141414;box-shadow:inset 0 0 0 1.5px #141414}.ds-prev{background:#ffe9ad;color:#474747;box-shadow:inset 0 0 0 1.5px rgba(20,20,20,.45)}.ds-old{color:#6b6b6b;box-shadow:inset 0 0 0 1.5px rgba(20,20,20,.28)}"
+    },
+    {
+      "name": "Display Card Toy Row",
+      "kind": "card",
+      "refersTo": "display-card",
+      "description": "Paper display card with lettered toy rows; chosen prints solid, others dashed.",
+      "html": "<section class=\"ds-sheet\"><h2 class=\"ds-sheet-title\">Pick one to make</h2><button class=\"ds-toy ds-chosen\"><span class=\"ds-letter\">A</span><span class=\"ds-capsule\"></span><span><b>Summit Oxygen Run</b><small>Dodge crevasses and grab oxygen</small></span></button><button class=\"ds-toy ds-faded\"><span class=\"ds-letter\">B</span><span class=\"ds-capsule ds-mint\"></span><span><b>Everest Summit Test</b><small>A training quiz</small></span></button></section>",
+      "css": ".ds-sheet{padding:22px 18px 14px;border-radius:22px;background:#fff;color:#141414;box-shadow:0 18px 40px rgba(86,4,0,.36),0 3px 8px rgba(86,4,0,.22);outline:1.5px solid #141414;outline-offset:-8px}.ds-sheet-title{margin:0;padding:0 6px 10px;font:400 22px/1.1 var(--font-display,'Dela Gothic One'),sans-serif}.ds-toy{display:grid;grid-template-columns:36px 48px 1fr;gap:12px;align-items:center;width:100%;padding:13px 8px;border:0;border-radius:14px;background:transparent;color:#141414;text-align:left;font:500 15px/1.4 var(--font-ui,'M PLUS Rounded 1c'),sans-serif;cursor:pointer;transition:background .2s,opacity .3s}.ds-toy:hover{background:#fff3cf}.ds-toy:focus-visible{outline:3px solid #ffc93c;outline-offset:2px}.ds-toy b{display:block;font-weight:800;font-size:16px}.ds-toy small{display:block;color:#474747;font-size:13.5px}.ds-letter{display:grid;place-items:center;width:34px;height:34px;border:2px solid currentColor;border-radius:50%;font:400 17px/1 var(--font-display,'Dela Gothic One'),sans-serif}.ds-capsule{width:48px;aspect-ratio:1;border-radius:50%;background:linear-gradient(180deg,#fbfbfb 0 49%,#141414 49% 53%,#ffc93c 53% 100%);box-shadow:inset 0 0 0 2px #141414}.ds-capsule.ds-mint{background:linear-gradient(180deg,#fbfbfb 0 49%,#141414 49% 53%,#2fc4a2 53% 100%)}.ds-chosen{background:#141414;color:#fff}.ds-chosen:hover{background:#141414}.ds-chosen small{color:#e2e2e2}.ds-faded{opacity:.42}.ds-faded .ds-letter{border-style:dashed}"
+    },
+    {
+      "name": "Receipt Slip",
+      "kind": "custom",
+      "refersTo": "receipt",
+      "description": "Dot-matrix slip with torn edges; the only place DotGothic16 appears.",
+      "html": "<div class=\"ds-receipt\"><div class=\"ds-rt\"><span>VibeBook slip</span><span>No. 000001</span></div><div class=\"ds-rl\"><span>✓</span><span>Turn the crank</span><span>~15s</span></div><div class=\"ds-rl\"><span>✓</span><span>Share the capsule</span><span>1 link</span></div></div>",
+      "css": ".ds-receipt{position:relative;margin:12px;padding:16px 16px 14px;background:#fff;color:#141414;font:400 13.5px/1.55 var(--font-receipt,'DotGothic16'),ui-monospace,monospace;letter-spacing:.02em;text-transform:uppercase;font-variant-numeric:tabular-nums;filter:drop-shadow(0 10px 14px rgba(86,4,0,.3))}.ds-receipt::before,.ds-receipt::after{content:'';position:absolute;left:0;right:0;height:8px;background:linear-gradient(135deg,#fff 50%,transparent 50%) 0 0/12px 8px repeat-x,linear-gradient(225deg,#fff 50%,transparent 50%) 6px 0/12px 8px repeat-x}.ds-receipt::before{top:-8px;transform:scaleY(-1)}.ds-receipt::after{bottom:-8px}.ds-rt{display:flex;justify-content:space-between;padding-bottom:6px;margin-bottom:6px;border-bottom:1.5px dashed rgba(20,20,20,.32)}.ds-rl{display:grid;grid-template-columns:18px 1fr auto;gap:6px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Capsule Machine",
+    "overview": "VibeBook is a gashapon machine for your feed. Every surface is the machine's glossy red enamel body; content sits on things the machine holds or prints: the post inside a clear acrylic dome, three toys lettered A, B and C on a white printed display card, a crank and chute where the capsule drops, a two-tone capsule that opens into the player, and a receipt slip that prints each build step. The world is tactile, toy-like and confident, lit from the upper left with soft plastic sheen, and it never reads as a dark AI tool.\n\nDensity is a single handheld column (560px max) in the create flow and share page; the landing widens to a two-column machine-and-copy layout. Colour carries meaning, not decoration: the capsule base colour names what you get (lemon for a game, mint for an app, sky for anything shared or remixed). Motion belongs to the machine's mechanics and only fires when state changes.",
+    "keyCharacteristics": [
+      "Machine-red enamel owns every background, header band and primary button.",
+      "White printed paper (display card, forms, receipt, labels) with ink rules carries all reading content.",
+      "Two-tone capsules: clear top, ink seam, coloured base; base colour = kind.",
+      "Heavy Japanese display gothic for titles and letters, rounded gothic for UI, dot-matrix only on the receipt.",
+      "Soft, warm-tinted drop shadows and inset plastic highlights; no flat-black glows.",
+      "Motion only at state changes: crank turn, capsule drop, halves parting, receipt lines printing."
+    ],
+    "rules": [
+      {
+        "name": "The Kind Colour Rule",
+        "body": "Lemon means GAME, mint means APP, sky means share or remix. A capsule colour is never used for decoration; lemon additionally carries focus and selection because it is the machine's highlight.",
+        "section": "colors"
+      },
+      {
+        "name": "The Paper Holds the Reading Rule",
+        "body": "Long or dense text sits on paper in ink. On red, only white text, and anything smaller than body (down to 13px captions) is set at 700 weight or above.",
+        "section": "colors"
+      },
+      {
+        "name": "The Dot-Matrix Stays on the Slip Rule",
+        "body": "DotGothic16 appears only on receipt paper. Never on buttons, headings, or the red body.",
+        "section": "typography"
+      },
+      {
+        "name": "The Display Is Printed Rule",
+        "body": "Dela Gothic One is used at weight 400 only, for titles, circled toy letters and the wordmark. Never for running text.",
+        "section": "typography"
+      },
+      {
+        "name": "The Warm Shadow Rule",
+        "body": "Every shadow that falls on the red body or on paper is tinted with the machine's own dark red. Grey glows on the machine read as a dark AI tool and break the world.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Capsule Shell Rule",
+        "body": "Until the toy is out, the player shell is the capsule itself (50% / 24% radius); when it opens it eases to a 30px rounded screen.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "**Do** keep machine-red (#d7322a) as the body and white as the only text colour on it.",
+      "**Do** put reading content on paper with ink, using Lift to set it on the machine.",
+      "**Do** colour every capsule, tag and label by kind: lemon GAME, mint APP, sky share/remix.",
+      "**Do** tint shadows with the machine's dark red and give curved plastic an upper-left highlight.",
+      "**Do** show progress as receipt lines that print, and show choice as solid versus dashed.",
+      "**Do** age change stamps from new (lemon, solid ring) to prev (faded) to old (outline only).",
+      "**Do** use 2px round-stroke SVG icons on a 24px grid in currentColor, and the ✦ mark as the brand's own shape."
+    ],
+    "donts": [
+      "**Don't** use spinners or idle looping animation; animate only when state changes.",
+      "**Don't** use DotGothic16 anywhere but receipt paper.",
+      "**Don't** set red text on paper in machine-red; use printed red (#a8201a).",
+      "**Don't** use a capsule colour as decoration where it doesn't mean its kind.",
+      "**Don't** drift toward a dark panel with a neon purple accent and a column of identical rounded cards.",
+      "**Don't** use neutral grey glows for elevation on the machine body or on paper."
+    ]
+  }
+}
