@@ -3,7 +3,7 @@
 import { useCallback } from "react";
 import AppFrame from "./AppFrame";
 import GameCanvas from "./GameCanvas";
-import type { ExperienceSpec } from "@/lib/spec";
+import type { GameSpec } from "@/lib/spec";
 
 function notify(message: { type: string; message?: string }) {
   if (window.parent !== window) window.parent.postMessage(message, "*");
@@ -11,7 +11,7 @@ function notify(message: { type: string; message?: string }) {
 
 export default function PlayView(props: {
   kind: "game" | "app";
-  spec: ExperienceSpec | null;
+  spec: GameSpec | null;
   html: string | null;
   photoPath: string | null;
 }) {
