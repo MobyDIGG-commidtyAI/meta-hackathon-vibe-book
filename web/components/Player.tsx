@@ -49,7 +49,7 @@ export default function Player(props: {
         key={`${id}-${version}`}
         src={`/play/${id}?embed=1&v=${version}`}
         title="VibeBook experience"
-        allow="autoplay; fullscreen"
+        allow="autoplay; fullscreen; clipboard-write; web-share"
       />
       <div className={`halves${status.state === "ready" ? " open" : ""}`} aria-hidden={status.state === "ready"}>
         <div className="half top">
