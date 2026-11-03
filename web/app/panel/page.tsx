@@ -23,6 +23,11 @@ export default function PanelPage() {
     return () => window.removeEventListener("message", onMessage);
   }, []);
 
-  if (!post) return <div className="hero muted">Opening VibeBook…</div>;
+  if (!post)
+    return (
+      <div className="machine">
+        <p className="boot">Opening VibeBook…</p>
+      </div>
+    );
   return <VibeFlow post={post} onClose={() => window.parent.postMessage({ type: "vibebook:close" }, "*")} />;
 }

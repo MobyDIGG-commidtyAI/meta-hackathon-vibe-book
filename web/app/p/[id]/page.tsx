@@ -1,6 +1,7 @@
 // The shared link: OG card for Facebook, the experience itself, credit, and Remix.
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Spark } from "@/components/Icons";
 import Player from "@/components/Player";
 import RemixBox from "@/components/RemixBox";
 import { getExperience } from "@/lib/store";
@@ -39,27 +40,45 @@ export default async function SharePage({ params }: { params: Promise<{ id: stri
   const parent = exp.parentId ? await getExperience(exp.parentId) : null;
   const by = exp.creatorName || "someone";
 
+  const remixed = parent?.published ? parent : null;
+
   return (
-    <main className="page">
-      <span className="brand">✦ VibeBook</span>
-      <Player id={exp.id} version={exp.version} />
-      <div>
-        <h1>{exp.title}</h1>
-        <div className="muted">{exp.tagline}</div>
-      </div>
-      <div className="muted small">
-        Made by {by} from a {exp.source.platform} post
-        {parent?.published && (
-          <>
-            {" "}
-            · remixed from <a href={`/p/${parent.id}`}>{parent.title}</a> by {parent.creatorName || "someone"}
-          </>
-        )}
-      </div>
-      <RemixBox id={exp.id} kind={exp.kind} />
-      <a className="btn ghost" href="/app">
-        Make your own from any photo
-      </a>
-    </main>
+    <div className="machine">
+      <header className="cap">
+        <a className="wordmark" href="/">
+          <Spark /> VibeBook
+        </a>
+        <a className="btn light" href="/app">
+          Make your own
+        </a>
+      </header>
+      <main className="body">
+        <div className="toy-window">
+          <div className={`toy-label ${exp.kind}`}>
+            <strong>{exp.kind === "game" ? "Tap the game to play" : "Try it right here"}</strong>
+            <span className={`tag ${exp.kind}`}>{exp.kind}</span>
+          </div>
+          <Player id={exp.id} version={exp.version} kind={exp.kind} />
+        </div>
+        <div>
+          <h1 className="share-title">{exp.title}</h1>
+          <p className="share-tagline">{exp.tagline}</p>
+        </div>
+        <div className={`labels${remixed ? " stacked" : ""}`}>
+          <span className="clabel over">
+            Made by {by} from a {exp.source.platform} post
+          </span>
+          {remixed && (
+            <span className="clabel under">
+              Remixed from <a href={`/p/${remixed.id}`}>{remixed.title}</a> by {remixed.creatorName || "someone"}
+            </span>
+          )}
+        </div>
+        <RemixBox id={exp.id} kind={exp.kind} />
+        <a className="btn outline" href="/app">
+          Make your own from any photo
+        </a>
+      </main>
+    </div>
   );
 }

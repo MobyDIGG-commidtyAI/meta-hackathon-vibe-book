@@ -1,6 +1,7 @@
 "use client";
-// ✦ Remix on a shared page: fork it with one sentence, get a new link that credits the original.
+// Remix on a shared page: refill the machine with one sentence, get a new link that credits the original.
 import { useState } from "react";
+import { Spark } from "./Icons";
 
 export default function RemixBox({ id, kind }: { id: string; kind: "game" | "app" }) {
   const [open, setOpen] = useState(false);
@@ -30,16 +31,18 @@ export default function RemixBox({ id, kind }: { id: string; kind: "game" | "app
 
   if (!open) {
     return (
-      <button type="button" className="btn" onClick={() => setOpen(true)}>
-        ✦ Remix
+      <button type="button" className="btn light big" onClick={() => setOpen(true)}>
+        <Spark /> Remix it
       </button>
     );
   }
 
   return (
-    <form className="share-box" onSubmit={remix}>
-      <strong>Remix it your way</strong>
+    <form className="form-sheet" onSubmit={remix}>
+      <h2>Put your spin on it</h2>
+      <label htmlFor="vb-remix">What should change?</label>
       <input
+        id="vb-remix"
         className="field"
         value={instruction}
         onChange={(e) => setInstruction(e.target.value)}
@@ -47,18 +50,24 @@ export default function RemixBox({ id, kind }: { id: string; kind: "game" | "app
         disabled={busy}
         autoFocus
       />
+      <label htmlFor="vb-remix-name">Your name on the capsule</label>
       <input
+        id="vb-remix-name"
         className="field"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        placeholder="Your name for the credit"
+        placeholder="e.g. Bird"
         maxLength={40}
         disabled={busy}
       />
-      <button className="btn" disabled={busy || !instruction.trim()}>
-        {busy ? "Remixing…" : "Create my remix"}
+      <button className="btn wide" disabled={busy || !instruction.trim()}>
+        {busy ? "Making your remix…" : "Make my remix"}
       </button>
-      {error && <span className="notice bad">{error}</span>}
+      {error && (
+        <p className="note" role="alert">
+          {error}
+        </p>
+      )}
     </form>
   );
 }
