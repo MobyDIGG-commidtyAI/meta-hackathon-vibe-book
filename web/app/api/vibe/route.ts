@@ -23,7 +23,7 @@ export async function POST(req: Request) {
 
     const { data, trace } = await chatJSON(
       "suggest",
-      { system: vibeSystem(), text: postBlock(caption, postUrl), imageDataUrl: image ? imageDataUrl : null },
+      { system: vibeSystem(!!image), text: postBlock(caption, postUrl), imageDataUrl: image ? imageDataUrl : null },
       { name: "vibe_suggestions", json: vibeJsonSchema, zod: VibeSchema },
     );
 

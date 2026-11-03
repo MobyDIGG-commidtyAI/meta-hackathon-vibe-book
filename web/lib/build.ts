@@ -1,10 +1,10 @@
 // The AI steps behind each route: build from a card, apply a change, repair a broken app.
 import { chatHTML, chatJSON, type TraceStep } from "./ai";
 import {
-  appSystem, cardBlock, editAppSystem, editAppText, editGameSystem, editGameText, editSchema,
-  gameSystem, postBlock, repairAppText, specSchema,
+  appSystem, cardBlock, editAppSystem, editAppText, editGameSystem, editGameText, editSchemaFor,
+  gameSystem, postBlock, repairAppText, specSchemaFor,
 } from "./prompts";
-import type { ExperienceSpec } from "./spec";
+import { GENRES, genreOf, type GameSpec, type Genre } from "./spec";
 import { getImage, type Experience, type Suggestion } from "./store";
 
 export async function imageDataUrl(imageId: string | null) {
@@ -13,7 +13,12 @@ export async function imageDataUrl(imageId: string | null) {
   return image ? `data:${image.mime};base64,${image.b64}` : null;
 }
 
-type Built = { spec: ExperienceSpec | null; html: string | null; title: string; tagline: string; trace: TraceStep };
+// Older cards carry no genre; anything unknown builds the runner.
+function gameGenre(s: Suggestion): Genre {
+  return s.genre && s.genre !== "none" && GENRES.includes(s.genre) ? s.genre : "runner";
+}
+
+type Built = { spec: GameSpec | null; html: string | null; title: string; tagline: string; trace: TraceStep };
 
 export async function buildFromCard(input: {
   suggestion: Suggestion;
@@ -24,10 +29,11 @@ export async function buildFromCard(input: {
 }): Promise<Built> {
   const text = `${cardBlock(input.suggestion, input.scene)}\n\n${postBlock(input.caption, input.postUrl)}`;
   if (input.suggestion.kind === "game") {
+    const genre = gameGenre(input.suggestion);
     const { data, trace } = await chatJSON(
       "write spec",
-      { system: gameSystem(), text, imageDataUrl: input.imageDataUrl },
-      specSchema,
+      { system: gameSystem(genre), text, imageDataUrl: input.imageDataUrl },
+      specSchemaFor(genre),
     );
     return { spec: data, html: null, title: data.title, tagline: data.tagline, trace };
   }
@@ -41,10 +47,11 @@ export async function buildFromCard(input: {
 
 export async function applyChange(exp: Experience, instruction: string) {
   if (exp.kind === "game" && exp.spec) {
+    const genre = genreOf(exp.spec);
     const { data, trace } = await chatJSON(
       "edit spec",
-      { system: editGameSystem(), text: editGameText(exp.spec, instruction) },
-      editSchema,
+      { system: editGameSystem(genre), text: editGameText(exp.spec, instruction) },
+      editSchemaFor(genre),
     );
     return {
       spec: data.spec,

@@ -1,10 +1,23 @@
 "use client";
 
 import { useEffect, useRef, type CSSProperties } from "react";
-import type { ExperienceSpec } from "@/lib/spec";
+import { genreOf, type GameSpec, type Genre } from "@/lib/spec";
+
+// Every genre module exports the same mountGame(parent, { spec, backgroundUrl, onReady, onError }) → destroy.
+type Mount = (
+  parent: HTMLElement,
+  opts: { spec: never; backgroundUrl: string | null; onReady: () => void; onError?: (e: unknown) => void },
+) => () => void;
+
+const GENRES: Record<Genre, () => Promise<{ mountGame: Mount }>> = {
+  runner: () => import("@/game/runner") as Promise<{ mountGame: Mount }>,
+  catch: () => import("@/game/catch") as Promise<{ mountGame: Mount }>,
+  puzzle: () => import("@/game/puzzle") as Promise<{ mountGame: Mount }>,
+  memory: () => import("@/game/memory") as Promise<{ mountGame: Mount }>,
+};
 
 export interface GameCanvasProps {
-  spec: ExperienceSpec;
+  spec: GameSpec;
   backgroundUrl: string | null;
   /** Fires once per mounted game, after its first frame has rendered. */
   onReady?: () => void;
@@ -23,7 +36,7 @@ const fill: CSSProperties = {
 };
 
 /**
- * Mounts the Phaser runner into a div that fills its parent. The game is rebuilt when the spec's
+ * Mounts the spec's genre (the Phaser runner by default) into a div that fills its parent. The game is rebuilt when the spec's
  * contents or the background URL change (not when the parent passes a new-but-equal object).
  */
 export function GameCanvas({ spec, backgroundUrl, onReady, onError, className, style }: GameCanvasProps) {
@@ -43,13 +56,13 @@ export function GameCanvas({ spec, backgroundUrl, onReady, onError, className, s
     if (!host) return;
     let cancelled = false;
     let destroy: (() => void) | null = null;
-    const currentSpec = JSON.parse(specKey) as ExperienceSpec;
+    const currentSpec = JSON.parse(specKey) as GameSpec;
 
-    import("@/game/runner")
+    GENRES[genreOf(currentSpec)]()
       .then(({ mountGame }) => {
         if (cancelled) return;
         destroy = mountGame(host, {
-          spec: currentSpec,
+          spec: currentSpec as never,
           backgroundUrl,
           onReady: () => {
             if (!cancelled) onReadyRef.current?.();
