@@ -2,19 +2,20 @@
 import { Redis } from "@upstash/redis";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import type { ExperienceSpec } from "./spec";
+import type { GameSpec, Genre } from "./spec";
 import type { TraceStep } from "./ai";
 
 export type Kind = "game" | "app";
 
-export type Suggestion = { kind: Kind; emoji: string; title: string; pitch: string };
+// genre: which game template a game card uses ("none" for apps; missing on older records means runner).
+export type Suggestion = { kind: Kind; genre?: Genre | "none"; emoji: string; title: string; pitch: string };
 
 export type Experience = {
   id: string;
   parentId: string | null;
   kind: Kind;
   version: number;
-  spec: ExperienceSpec | null;
+  spec: GameSpec | null;
   html: string | null;
   title: string;
   tagline: string;

@@ -3,6 +3,7 @@ import { nanoid } from "nanoid";
 import { buildFromCard, imageDataUrl } from "@/lib/build";
 import { fail, handle, newEditToken, rateLimited } from "@/lib/http";
 import { ENABLED_KINDS } from "@/lib/prompts";
+import { GENRES, type Genre } from "@/lib/spec";
 import { keepImage, saveExperience, toPublic, type Experience, type Suggestion } from "@/lib/store";
 
 export const maxDuration = 300; // writing an app can take a while
@@ -19,6 +20,7 @@ export async function POST(req: Request) {
     }
     const suggestion: Suggestion = {
       kind: s.kind,
+      genre: s.kind === "game" && GENRES.includes(s.genre as Genre) ? (s.genre as Genre) : s.kind === "game" ? "runner" : "none",
       emoji: String(s.emoji ?? "✦").slice(0, 16),
       title: s.title.slice(0, 40),
       pitch: s.pitch.slice(0, 140),
