@@ -22,7 +22,18 @@ Examples of worlds:
 
 The world gives you typography, colour, layout and small details (perforations, ruled lines, stamps, map legends, ticket notches). Controls stay standard and easy to use; only their look comes from the world.
 
-## 2. Never ship the AI look
+## 2. Make it genuinely useful
+
+Looks come second. Someone should be able to use this app for real after seeing the post.
+
+- **One job, finished:** answer one real question the post raises (Can I make it? When should I go? What do I bring? What will it cost?) and end with a concrete answer, not a vague score.
+- **Useful from the first second:** start from sensible defaults so the result already shows something. Keep all state in one object and redraw every output from one `render()` function, so no line on the page can disagree with another. Any sentence that mentions a choice (the car, the date, the route) reads it from that state; never hard-code advice for the default choice.
+- **Something to take away:** end with a **Copy** button that copies a plain-text version of the result: the plan, the checklist, or a message ready to send, formatted for pasting into Messenger or LINE. Call `navigator.clipboard.writeText`, fall back to selecting a visible `<textarea>` and `document.execCommand("copy")`, and confirm with "Copied". Offer `navigator.share` as well when it exists.
+- **Honest about the real world:** for a real place, shop or event, never invent prices, phone numbers, opening hours, availability or booking. Use only what the post says. Let the user type what's missing, and label every estimate "est.".
+- **No pretend actions:** buttons never pretend to book, pay, reserve or send. For a real-world action, produce the message or details the user sends themselves ("Copy message to the campsite").
+- **Safety where it matters:** if the subject carries risk (mountains, driving, water, money, health), include the one or two facts that keep people safe, in plain words.
+
+## 3. Never ship the AI look
 
 These are banned unless the world literally is that thing:
 - Near-black or navy background with one neon, gold or lime accent. Dark is allowed only for worlds that are dark in real life (night sky, cinema, observatory, nightclub).
@@ -41,7 +52,7 @@ These are banned unless the world literally is that thing:
 - Made-up ratings, review counts, prices or availability presented as fact ("4.9 ★", "only 3 left").
 - A two-colour headline with one highlighted word as the only design idea.
 
-## 3. Colour
+## 4. Colour
 
 - Define 3–5 colours as CSS custom properties in `:root`, named for their role: `--ground`, `--ink`, `--primary` (actions), `--second`, `--highlight`.
 - Take them from the photo and from the world's real materials: kraft paper, forest-green enamel, sky-blue tile, concrete, sand, signal orange, brass, chalkboard green.
@@ -50,7 +61,7 @@ These are banned unless the world literally is that thing:
 - Pick `--primary` dark enough for white text at 4.5:1, or put `--ink` text on it. Bright oranges, yellows and light greens take dark text.
 - On a coloured ground, tint secondary text from that hue instead of using grey.
 
-## 4. Type (system fonts only; web fonts cannot load)
+## 5. Type (system fonts only; web fonts cannot load)
 
 Choose one display stack that fits the world and one body stack. Pick from these:
 - Geometric (modern travel, design objects): `"Futura", "Avenir Next", "Century Gothic", "Trebuchet MS", sans-serif`
@@ -69,7 +80,7 @@ Rules:
 - Use `font-variant-numeric: tabular-nums` for numbers that change.
 - Uppercase only for labels of three words or fewer (under 20 characters), at 12px or larger, with tracking of 0.06em or less. Never uppercase sentences, help text or buttons.
 
-## 5. Layout
+## 6. Layout
 
 - The first screen (440×700) shows the photo, the title and the main interaction. The user can do something within 10 seconds without scrolling.
 - Compose the screen as the world's artifact (a ticket, a map with its legend, a logbook page, a menu board, a spec sheet), not as a stack of boxes.
@@ -79,7 +90,7 @@ Rules:
 - Show the result live as the world's finished artifact (a filled-in permit, a printed boarding pass, a scorecard, a receipt). That result is the hero of the app.
 - Keep one root `<main>`, width 100%, max-width about 520px, centred. It must work at 360px wide.
 
-## 6. Components
+## 7. Components
 
 - One primary button (solid, in `--primary`) per screen region, with secondary actions as outline or text. Every button needs hover, active, disabled and `:focus-visible` states.
 - Inputs: visible labels above them, borders or underlines drawn from the palette, placeholders still readable.
@@ -87,23 +98,26 @@ Rules:
 - Icons: draw small inline SVGs (24px grid, 2px stroke, `currentColor`), or use none.
 - Theme the browser parts too: `::selection`, `accent-color` for native controls, `caret-color`, and a focus outline in your palette.
 
-## 7. Motion
+## 8. Motion
 
 One authored moment tied to the main action, for example the result card stamping in or a gauge needle swinging. Use 150–400ms with `cubic-bezier(.2,.8,.2,1)`, animate only transform and opacity, never loop, and disable it under `prefers-reduced-motion`. Progress bars and meters change with `transform: scaleX()`, never by transitioning `width`.
 
-## 8. Words
+## 9. Words
 
 - Use the post's real specifics: places, dates and names from the caption.
 - Label estimates as estimates ("about", "est."). Never invent facts about a real business.
 - Keep copy short and concrete, in the world's voice. Buttons name the action ("Book 2 nights", "Check my gear"), never "Submit".
 - Write in plain sentences. Use periods and commas, and at most one em dash on the whole page.
+- English only. Never mix in words or characters from another language.
 - Handle empty and invalid input with one helpful line.
 
-## 9. Check before you return the HTML
+## 10. Check before you return the HTML
 
 - The world comment is the first line of `<style>`.
-- Nothing from section 2 is in the page.
+- Nothing from section 3 is in the page.
 - Colours come from `:root` variables, and one of them owns a large area.
 - No text under 13px, every tap target is at least 44px, and every text colour (placeholders and hover states included) passes 4.5:1.
 - The photo, the title and the main action are visible on the first screen.
-- The result updates live and looks like the world's artifact.
+- The result updates live, every line agrees with the controls, and it looks like the world's artifact.
+- A Copy button gives the user the result as plain text, and no button pretends to book, pay or send.
+- No invented prices, contacts, hours or availability for a real place.

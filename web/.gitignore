@@ -43,3 +43,6 @@ next-env.d.ts
 
 # local dev store (used when Upstash env is empty)
 .data/
+
+# local usability-test copies of generated apps
+/public/dev-apps/

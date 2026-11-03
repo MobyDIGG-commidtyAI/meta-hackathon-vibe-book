@@ -91,5 +91,5 @@ export default function AppFrame(props: {
     return () => window.removeEventListener("message", onMessage);
   }, [onReady, onError]);
 
-  return doc ? <iframe ref={ref} srcDoc={doc} sandbox="allow-scripts" title="App" /> : null;
+  return doc ? <iframe ref={ref} srcDoc={doc} sandbox="allow-scripts" allow="clipboard-write; web-share" title="App" /> : null;
 }
