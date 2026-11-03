@@ -7,6 +7,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Player, { type PlayerStatus } from "./Player";
 import { Back, Check, Close, Copy, External, Retry, Spark } from "./Icons";
 import type { TraceStep } from "@/lib/ai";
+import { CHANGE_EXAMPLES, genreOf, kindLabel } from "@/lib/spec";
 import type { PublicExperience, Suggestion } from "@/lib/store";
 
 export type Post = { image: string | null; caption: string; postUrl: string; platform: string };
@@ -290,7 +291,7 @@ export default function VibeFlow({ post, onClose }: { post: Post; onClose?: () =
                   <span>
                     <span className="toy-title">
                       {card.title}
-                      <span className={`tag ${card.kind}`}>{card.kind}</span>
+                      <span className={`tag ${card.kind}`}>{kindLabel(card.kind, card.genre)}</span>
                     </span>
                     <span className="toy-pitch">{card.pitch}</span>
                   </span>
@@ -332,7 +333,7 @@ export default function VibeFlow({ post, onClose }: { post: Post; onClose?: () =
               <div className={`toy-label ${exp.kind}`}>
                 {letter && <span className="toy-letter">{letter}</span>}
                 <strong>{exp.title}</strong>
-                <span className={`tag ${exp.kind}`}>{exp.kind}</span>
+                <span className={`tag ${exp.kind}`}>{kindLabel(exp.kind, exp.spec ? genreOf(exp.spec) : "none")}</span>
               </div>
               <Player id={exp.id} version={exp.version} kind={exp.kind} className="flow-player" onStatus={onStatus} />
             </div>
@@ -347,7 +348,7 @@ export default function VibeFlow({ post, onClose }: { post: Post; onClose?: () =
                     className="field"
                     value={instruction}
                     onChange={(e) => setInstruction(e.target.value)}
-                    placeholder={exp.kind === "game" ? "add a rocket boost and make it night" : "say what to change"}
+                    placeholder={exp.kind === "game" && exp.spec ? CHANGE_EXAMPLES[genreOf(exp.spec)] : "say what to change"}
                     disabled={busy}
                   />
                   <button className="btn" disabled={busy || !instruction.trim()}>

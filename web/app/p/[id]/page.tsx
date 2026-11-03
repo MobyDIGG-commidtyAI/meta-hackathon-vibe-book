@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Spark } from "@/components/Icons";
 import Player from "@/components/Player";
 import RemixBox from "@/components/RemixBox";
+import { genreOf, kindLabel } from "@/lib/spec";
 import { getExperience } from "@/lib/store";
 
 export const dynamic = "force-dynamic";
@@ -56,7 +57,7 @@ export default async function SharePage({ params }: { params: Promise<{ id: stri
         <div className="toy-window">
           <div className={`toy-label ${exp.kind}`}>
             <strong>{exp.kind === "game" ? "Tap the game to play" : "Try it right here"}</strong>
-            <span className={`tag ${exp.kind}`}>{exp.kind}</span>
+            <span className={`tag ${exp.kind}`}>{kindLabel(exp.kind, exp.spec ? genreOf(exp.spec) : "none")}</span>
           </div>
           <Player id={exp.id} version={exp.version} kind={exp.kind} />
         </div>
@@ -74,7 +75,7 @@ export default async function SharePage({ params }: { params: Promise<{ id: stri
             </span>
           )}
         </div>
-        <RemixBox id={exp.id} kind={exp.kind} />
+        <RemixBox id={exp.id} kind={exp.kind} genre={exp.spec ? genreOf(exp.spec) : undefined} />
         <a className="btn outline" href="/app">
           Make your own from any photo
         </a>

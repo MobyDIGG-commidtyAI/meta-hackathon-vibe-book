@@ -2,8 +2,11 @@
 // Remix on a shared page: refill the machine with one sentence, get a new link that credits the original.
 import { useState } from "react";
 import { Spark } from "./Icons";
+import { CHANGE_EXAMPLES, type Genre } from "@/lib/spec";
 
-export default function RemixBox({ id, kind }: { id: string; kind: "game" | "app" }) {
+const REMIX_EXAMPLES: Record<Genre, string> = { ...CHANGE_EXAMPLES, runner: "neon night run, insane speed" };
+
+export default function RemixBox({ id, kind, genre }: { id: string; kind: "game" | "app"; genre?: Genre }) {
   const [open, setOpen] = useState(false);
   const [instruction, setInstruction] = useState("");
   const [name, setName] = useState("");
@@ -46,7 +49,7 @@ export default function RemixBox({ id, kind }: { id: string; kind: "game" | "app
         className="field"
         value={instruction}
         onChange={(e) => setInstruction(e.target.value)}
-        placeholder={kind === "game" ? "neon night run, insane speed" : "say what to change"}
+        placeholder={kind === "game" ? REMIX_EXAMPLES[genre ?? "runner"] : "say what to change"}
         disabled={busy}
         autoFocus
       />
