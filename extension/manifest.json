@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "VibeBook",
+  "version": "0.1.0",
+  "description": "Turn a Facebook post into something you can play, use, and share.",
+  "action": {
+    "default_title": "Vibe the post in the middle of the screen"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.facebook.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["panel.html"],
+      "matches": ["https://*.facebook.com/*"]
+    }
+  ],
+  "host_permissions": [
+    "https://*.facebook.com/*",
+    "https://*.fbcdn.net/*",
+    "http://localhost:3000/*",
+    "https://*.vercel.app/*"
+  ],
+  "permissions": ["storage", "activeTab", "scripting"]
+}
