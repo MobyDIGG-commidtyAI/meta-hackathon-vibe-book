@@ -1,5 +1,6 @@
-// VibeBook content script: adds a creation shortcut to post photos and opens the panel over the page.
-// Each chip lives in its post or media frame so scrolling follows the page's own layout.
+// VibeBook content script: puts a Vibe chip on post photos, videos and text posts, and opens the panel over the page.
+// Our UI lives in a closed shadow root outside FB's React tree, drawn above the page, so FB's CSS, stacking and
+// click handlers can't touch it. Each chip follows its post and hides when something else covers it.
 (() => {
   if (globalThis.__vibebook) return; // the toolbar fallback may inject this file a second time
   globalThis.__vibebook = true;
@@ -16,10 +17,22 @@
   const PERMALINK = 'a[href*="/posts/"], a[href*="/permalink/"], a[href*="story_fbid="], a[href*="/photo"], a[href*="fbid="], a[href*="/reel/"], a[href*="/watch/"], a[href*="video_id="]';
   const VIDEO = 'video, [data-video-id], [role="video"]';
 
-  const panelHost = document.createElement("vibebook-root");
-  const panelRoot = panelHost.attachShadow({ mode: "closed" });
-  panelRoot.innerHTML = `<style>
+  const host = document.createElement("vibebook-root");
+  const root = host.attachShadow({ mode: "closed" });
+  root.innerHTML = `<style>
     :host { all: initial; }
+    .chip {
+      position: fixed; left: 0; top: 0; z-index: 2147483646;
+      display: inline-flex; align-items: center; gap: 6px;
+      font: 550 12px/1 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #fff;
+      background: #6752e8; border: 1px solid #5945d4; border-radius: 8px; padding: 10px 12px; cursor: pointer;
+      box-shadow: 0 2px 8px rgba(26, 34, 57, 0.2);
+    }
+    .chip svg { width: 15px; height: 15px; fill: currentColor; }
+    .chip:hover { border-color: #4938c1; background: #5742d5; }
+    .chip:active { translate: 0 1px; }
+    .chip:focus-visible { outline: 3px solid #bcb4ff; outline-offset: 2px; }
+    .chip[hidden] { display: none; }
     .overlay {
       position: fixed; top: 0; right: 0; z-index: 2147483647;
       width: min(440px, 100vw); height: 100vh;
@@ -27,12 +40,11 @@
     }
     .overlay iframe { display: block; width: 100%; height: 100%; border: 0; background: #f5f7fc; }
     @keyframes slide-in { from { transform: translateX(100%); } }
-    @media (prefers-reduced-motion: reduce) { .overlay { animation: none; } }
+    @media (prefers-reduced-motion: reduce) { .overlay { animation: none; } .chip:active { translate: none; } }
   </style>`;
-  document.documentElement.append(panelHost);
+  document.documentElement.append(host);
 
-  const chips = new Map(); // post -> its in-frame shadow host and positioning cleanup
-  const positionedContainers = new WeakMap();
+  const chips = new Map(); // media, or the post of a text-only post -> { chip, scope, media }
   let overlay = null;
 
   function isPhotoUrl(src) {
@@ -97,30 +109,6 @@
     return videoFrame || null;
   }
 
-  // Anchor a media button to the smallest matching frame, not the viewport.
-  function mediaContainer(media) {
-    const mediaRect = media.getBoundingClientRect();
-    let candidate = null;
-    let fallback = null;
-    const first = media.matches("img, video") ? media.parentElement : media;
-    for (let el = first, depth = 0; el && el !== document.body && depth < 6; el = el.parentElement, depth++) {
-      if (el.matches(POST)) break;
-      const rect = el.getBoundingClientRect();
-      if (rect.width < MIN_W || rect.height < MIN_H) continue;
-
-      const style = getComputedStyle(el);
-      const photoLike = el.tagName === "A" || style.overflowX !== "visible" || style.overflowY !== "visible";
-      if (photoLike && !fallback) fallback = el;
-      const closeWidth = rect.width >= mediaRect.width * 0.65 && rect.width <= mediaRect.width * 1.5 + 40;
-      const closeHeight = rect.height >= mediaRect.height * 0.55 && rect.height <= mediaRect.height * 1.5 + 40;
-      if (!closeWidth || !closeHeight) continue;
-
-      if (photoLike) return el;
-      candidate ||= el;
-    }
-    return candidate || fallback;
-  }
-
   function discoverPosts() {
     const posts = new Set();
     for (const message of document.querySelectorAll(MESSAGE)) {
@@ -135,100 +123,117 @@
     return posts;
   }
 
-  function positionContainer(container) {
-    let state = positionedContainers.get(container);
-    if (!state) {
-      state = {
-        count: 0,
-        changed: getComputedStyle(container).position === "static",
-        value: container.style.getPropertyValue("position"),
-        priority: container.style.getPropertyPriority("position"),
-      };
-      if (state.changed) container.style.setProperty("position", "relative");
-      positionedContainers.set(container, state);
+  // Every chip to show: one per photo or video (a grid gets one per photo), and one per text-only post.
+  // Media outside a feed post (the photo viewer, a post opened in a dialog) reads its dialog or the page.
+  function chipTargets() {
+    const found = new Map();
+    const taken = []; // a video's poster image sits on the video: one chip for both
+    for (const media of [...document.querySelectorAll(VIDEO), ...document.querySelectorAll("img")]) {
+      if (!largeMedia(media)) continue;
+      const scope = findPost(media, true) || media.closest('[role="dialog"], [aria-modal="true"], [role="main"]');
+      if (!scope) continue;
+      const r = media.getBoundingClientRect();
+      const x = (r.left + r.right) / 2;
+      const y = (r.top + r.bottom) / 2;
+      if (taken.some((t) => t.scope === scope && x >= t.r.left && x <= t.r.right && y >= t.r.top && y <= t.r.bottom)) continue;
+      taken.push({ scope, r });
+      found.set(media, { scope, media });
     }
-    state.count++;
+    const withMedia = [...found.values()];
+    for (const message of document.querySelectorAll(MESSAGE)) {
+      const post = findPost(message);
+      if (post && !withMedia.some((t) => post.contains(t.media))) found.set(post, { scope: post, media: null });
+    }
+    return found;
+  }
 
-    return () => {
-      if (--state.count > 0) return;
-      if (state.changed && container.style.getPropertyValue("position") === "relative") {
-        if (state.value) container.style.setProperty("position", state.value, state.priority);
-        else container.style.removeProperty("position");
+  // The part of the media (or text post) the user can see: FB crops grid and tall photos with overflow:hidden
+  // wrappers anywhere up to the post, and the viewport crops the rest.
+  function visibleRect({ scope, media }) {
+    let { left, top, right, bottom } = (media || scope).getBoundingClientRect();
+    for (let el = media?.parentElement; media && el; el = el.parentElement) {
+      const style = getComputedStyle(el);
+      if (style.overflowX !== "visible" || style.overflowY !== "visible") {
+        const r = el.getBoundingClientRect();
+        left = Math.max(left, r.left);
+        top = Math.max(top, r.top);
+        right = Math.min(right, r.right);
+        bottom = Math.min(bottom, r.bottom);
       }
-      positionedContainers.delete(container);
+      if (el === scope) break;
+    }
+    return {
+      left: Math.max(left, 0),
+      top: Math.max(top, 0),
+      right: Math.min(right, innerWidth),
+      bottom: Math.min(bottom, innerHeight),
     };
   }
 
-  function makeChip(post, container, media) {
-    const chipHost = document.createElement("vibebook-chip");
-    chipHost.className = media ? "media" : "text";
-    const chipRoot = chipHost.attachShadow({ mode: "closed" });
-    chipRoot.innerHTML = `<style>
-      :host { all: initial; position: absolute; top: 0; right: 0; z-index: 2; display: block; width: 0; height: 0; pointer-events: none; }
-      .chip {
-        all: unset; box-sizing: border-box; position: absolute; top: 10px; right: 10px;
-        display: inline-flex; align-items: center; gap: 6px; pointer-events: auto;
-        font: 550 12px/1 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #fff;
-        background: #6752e8; border: 1px solid #5945d4; border-radius: 8px; padding: 10px 12px; cursor: pointer;
-        box-shadow: 0 2px 8px rgba(26, 34, 57, 0.2);
-      }
-      .chip svg { width: 15px; height: 15px; fill: currentColor; stroke: none; }
-      .chip:hover { border-color: #4938c1; background: #5742d5; }
-      .chip:active { transform: translateY(1px); }
-      .chip:focus-visible { outline: 3px solid #bcb4ff; outline-offset: 2px; }
-      :host(.text) .chip { right: 52px; }
-      @media (prefers-reduced-motion: reduce) { .chip:active { transform: none; } }
-    </style><button class="chip" type="button" aria-label="Vibe this post with VibeBook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.5 5.6 4.9 10 10.5 10.5-5.6.5-10 4.9-10.5 10.5-.5-5.6-4.9-10-10.5-10.5C7.1 11.5 11.5 7.1 12 1.5Z"/></svg>Vibe</button>`;
-    const chip = chipRoot.querySelector("button");
-    const record = { host: chipHost, container, media, releasePosition: positionContainer(container) };
+  // False when something outside the chip's post (a dialog, a menu, FB's top bar) is drawn over that point.
+  function isOnTop({ scope, media }, x, y) {
+    const under = document.elementsFromPoint(x, y).find((el) => el !== host);
+    return !under || under === media || scope.contains(under) || under.contains(media || scope);
+  }
+
+  function makeChip({ scope, media }) {
+    const chip = document.createElement("button");
+    chip.className = "chip";
+    chip.type = "button";
+    chip.hidden = true;
+    chip.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.5 5.6 4.9 10 10.5 10.5-5.6.5-10 4.9-10.5 10.5-.5-5.6-4.9-10-10.5-10.5C7.1 11.5 11.5 7.1 12 1.5Z"/></svg>Vibe`;
+    chip.setAttribute("aria-label", "Vibe this post with VibeBook");
     chip.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
-      open(readPost(post, record.media));
+      open(readPost(scope, media));
     });
-    container.append(chipHost);
-    return record;
+    root.append(chip);
+    return { chip, scope, media, w: 74, h: 37 };
+  }
+
+  let raf = 0;
+  function schedule() {
+    raf ||= requestAnimationFrame(layout);
+  }
+
+  function layout() {
+    raf = 0;
+    for (const entry of chips.values()) {
+      const r = visibleRect(entry);
+      // Media chips sit in the photo's corner; text chips stay clear of the post's ⋯ menu.
+      const right = r.right - (entry.media ? 10 : 52);
+      const top = r.top + 10;
+      const corners = [[right - entry.w + 3, top + 3], [right - 3, top + 3], [right - entry.w + 3, top + entry.h - 3], [right - 3, top + entry.h - 3]];
+      const show =
+        r.right - r.left >= MIN_W &&
+        r.bottom - r.top >= (entry.media ? MIN_H : entry.h + 20) &&
+        corners.every(([x, y]) => y >= innerHeight || isOnTop(entry, x, y));
+      entry.chip.hidden = !show;
+      if (!show) continue;
+      entry.chip.style.transform = `translate(${right}px, ${top}px) translateX(-100%)`;
+      entry.w = entry.chip.offsetWidth || entry.w;
+      entry.h = entry.chip.offsetHeight || entry.h;
+    }
   }
 
   let scanTimer = 0;
   function scheduleScan() {
-    if (scanTimer) return;
-    scanTimer = setTimeout(scan, 100);
-  }
-
-  function removeChip(post) {
-    const chip = chips.get(post);
-    if (!chip) return;
-    chip.host.remove();
-    chip.releasePosition();
-    chips.delete(post);
+    scanTimer ||= setTimeout(scan, 100);
   }
 
   function scan() {
     scanTimer = 0;
-    const posts = discoverPosts();
-    for (const post of posts) {
-      const media = primaryMedia(post);
-      const container = media ? mediaContainer(media) || post : post;
-      const rect = container.getBoundingClientRect();
-      const largeEnough = rect.width >= MIN_W && rect.height >= (media ? MIN_H : 40);
-      const existing = chips.get(post);
-      if (!largeEnough) {
-        removeChip(post);
-        continue;
-      }
-      if (existing && (!existing.host.isConnected || existing.container !== container)) removeChip(post);
-      const chip = chips.get(post);
-      if (!chip) chips.set(post, makeChip(post, container, media));
-      else {
-        chip.media = media;
-        chip.host.className = media ? "media" : "text";
-      }
+    const found = chipTargets();
+    for (const [key, entry] of chips) {
+      if (found.get(key)?.scope === entry.scope) continue;
+      entry.chip.remove();
+      chips.delete(key);
     }
-
-    for (const post of chips.keys()) {
-      if (!post.isConnected || !posts.has(post)) removeChip(post);
+    for (const [key, target] of found) {
+      if (!chips.has(key)) chips.set(key, makeChip(target));
     }
+    layout();
   }
 
   function onMediaLoad(e) {
@@ -299,7 +304,7 @@
     frame.src = `${panelUrl()}#${encodeURIComponent(JSON.stringify(payload))}`;
     frame.allow = "clipboard-write";
     overlay.append(frame);
-    panelRoot.append(overlay);
+    root.append(overlay);
   }
 
   function close() {
@@ -318,7 +323,11 @@
     if (msg?.type === "vibebook:open-center") open(readCenterPost());
   });
 
-  new MutationObserver(scheduleScan).observe(document.documentElement, {
+  // FB inserts and resizes posts as you scroll: move the chips we have now, and look for new ones shortly.
+  new MutationObserver(() => {
+    schedule();
+    scheduleScan();
+  }).observe(document.documentElement, {
     childList: true,
     subtree: true,
     attributes: true,
@@ -326,6 +335,8 @@
   });
   addEventListener("load", onMediaLoad, true);
   addEventListener("loadedmetadata", onMediaLoad, true);
-  addEventListener("resize", scheduleScan, { passive: true });
+  addEventListener("scroll", schedule, { capture: true, passive: true });
+  addEventListener("resize", schedule, { passive: true });
+  setInterval(scheduleScan, 1000); // FB shows and hides dialogs with class changes the observer doesn't watch
   scan();
 })();

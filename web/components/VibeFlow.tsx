@@ -89,7 +89,7 @@ export default function VibeFlow({ post, onClose }: { post: Post; onClose?: () =
       settle("done", "Read the post", secs(data.trace[0]?.ms ?? 0));
     } catch (e) {
       settle("fail", `Couldn't read the post: ${errorText(e)}`);
-      setError({ message: errorText(e), retry: read });
+      setError({ message: errorText(e), retry: () => read(level) });
     }
   }, [post, learningLevel]);
 

@@ -12,3 +12,6 @@ context/*.zip
 .impeccable/review/
 .impeccable/questions/
 .impeccable/hook.cache.json
+
+# Local screenshots and test output
+/output/

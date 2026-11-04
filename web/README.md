@@ -20,6 +20,20 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Tests
+
+Browser tests (Playwright, on your installed Google Chrome) for the create flow, the pages, and the extension's
+content script. The model routes are mocked, so a run costs nothing:
+
+```bash
+npm test                      # starts next dev on :3210 (or reuses it)
+VIBEBOOK_BASE_URL=http://localhost:3000 npm test   # against a server that's already running
+```
+
+Tests tagged `@new` cover behaviour added in the blue-violet redesign (learning levels, text and video chips).
+To compare with an older checkout, point `VIBEBOOK_BASE_URL`, `VIBEBOOK_EXTENSION_DIR` and `VIBEBOOK_WEB_DIR` at it
+and add `--grep-invert @new`.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
