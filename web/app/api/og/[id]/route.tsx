@@ -43,7 +43,7 @@ export async function GET(_req: Request, ctx: { params: Promise<{ id: string }> 
           alignItems: "center",
           gap: 64,
           padding: "0 72px",
-          background: "linear-gradient(135deg, #f3f7ff 0%, #f6f3ff 100%)",
+          background: "#f5f7fc",
           color: "#1b2440",
           fontFamily: "Inter",
         }}
@@ -54,11 +54,11 @@ export async function GET(_req: Request, ctx: { params: Promise<{ id: string }> 
             flexShrink: 0,
             width: 400,
             height: 470,
-            borderRadius: 24,
+            borderRadius: 12,
             overflow: "hidden",
-            background: "#e9edfa",
-            border: "1px solid #e1e6f2",
-            boxShadow: "0 20px 48px rgba(46,58,103,0.14)",
+            background: "#edf0f7",
+            border: "1px solid #e1e4eb",
+            boxShadow: "0 4px 16px rgba(28,36,58,0.08)",
           }}
         >
           {photo && (
@@ -67,29 +67,28 @@ export async function GET(_req: Request, ctx: { params: Promise<{ id: string }> 
           )}
         </div>
         <div style={{ display: "flex", flexDirection: "column", flex: 1, minWidth: 0 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 12, fontSize: 32, fontWeight: 800, marginBottom: 22 }}>
-            <div style={{ display: "flex", width: 38, height: 38, borderRadius: 11, alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg, #3675ee 0%, #7452e8 100%)", boxShadow: "0 5px 14px rgba(83,88,206,0.2)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, fontSize: 28, fontWeight: 600, marginBottom: 22 }}>
+            <div style={{ display: "flex", width: 38, height: 38, border: "1px solid #6752e8", borderRadius: 8, alignItems: "center", justifyContent: "center", background: "#6752e8", color: "#fff" }}>
               <svg width="19" height="19" viewBox="0 0 24 24">
-                <path fill="#fff" d="M12 1.5c.5 5.6 4.9 10 10.5 10.5-5.6.5-10 4.9-10.5 10.5-.5-5.6-4.9-10-10.5-10.5C7.1 11.5 11.5 7.1 12 1.5Z" />
+                <path fill="currentColor" d="M12 1.5c.5 5.6 4.9 10 10.5 10.5-5.6.5-10 4.9-10.5 10.5-.5-5.6-4.9-10-10.5-10.5C7.1 11.5 11.5 7.1 12 1.5Z" />
               </svg>
             </div>
             VibeBook
           </div>
-          <div style={{ display: "flex", fontSize: 62, fontWeight: 700, lineHeight: 1.08, letterSpacing: -2 }}>{exp.title}</div>
-          <div style={{ display: "flex", color: "#65708a", fontSize: 27, fontWeight: 500, marginTop: 16, lineHeight: 1.35 }}>{exp.tagline}</div>
-          <div style={{ display: "flex", alignSelf: "flex-start", marginTop: 20, padding: "7px 12px", border: "1px solid #dfdefb", borderRadius: 999, color: "#6257b9", background: "#f7f6ff", fontSize: 17, fontWeight: 600 }}>{learningLevel}</div>
+          <div style={{ display: "flex", fontSize: 60, fontWeight: 600, lineHeight: 1.08, letterSpacing: -1.5 }}>{exp.title}</div>
+          <div style={{ display: "flex", color: "#68728b", fontSize: 27, fontWeight: 500, marginTop: 16, lineHeight: 1.35 }}>{exp.tagline}</div>
+          <div style={{ display: "flex", alignSelf: "flex-start", marginTop: 20, padding: "7px 12px", border: "1px solid #dbe2ff", borderRadius: 6, color: "#365fc2", background: "#f0f4ff", fontSize: 17, fontWeight: 500 }}>{learningLevel}</div>
           <div
             style={{
               display: "flex",
               marginTop: 24,
               alignSelf: "flex-start",
               padding: "15px 25px",
-              borderRadius: 13,
-              background: "linear-gradient(135deg, #3675ee 0%, #7452e8 100%)",
+              borderRadius: 7,
+              background: "#6752e8",
               color: "#fff",
               fontSize: 26,
-              fontWeight: 700,
-              boxShadow: "0 9px 22px rgba(83,88,206,0.22)",
+              fontWeight: 600,
               alignItems: "center",
               gap: 12,
             }}

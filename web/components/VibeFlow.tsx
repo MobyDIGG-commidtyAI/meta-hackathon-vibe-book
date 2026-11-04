@@ -2,7 +2,7 @@
 // AI-powered post-to-creation flow shared by the extension panel and the no-install page.
 import { useCallback, useEffect, useRef, useState } from "react";
 import Player, { type PlayerStatus } from "./Player";
-import { ArrowRight, Back, Check, CircleCheck, Close, Compass, Copy, External, Gamepad, Puzzle, Retry, Spark } from "./Icons";
+import { ArrowRight, Back, BookOpen, Check, CircleCheck, Close, Compass, Copy, External, Gamepad, Puzzle, Retry, Spark } from "./Icons";
 import type { TraceStep } from "@/lib/ai";
 import { CHANGE_EXAMPLES, genreOf, kindLabel } from "@/lib/spec";
 import type { PublicExperience, Suggestion } from "@/lib/store";
@@ -236,7 +236,7 @@ export default function VibeFlow({ post, onClose }: { post: Post; onClose?: () =
     <div className="machine">
       <header className="cap">
         <span className="wordmark">
-          <span className="brand-mark"><Spark size={15} /></span> VibeBook
+          <span className="brand-mark"><Spark size={17} /></span> VibeBook
         </span>
         {onClose && (
           <button type="button" className="icon-button" onClick={onClose} aria-label="Close">
@@ -252,10 +252,10 @@ export default function VibeFlow({ post, onClose }: { post: Post; onClose?: () =
               // eslint-disable-next-line @next/next/no-img-element
               <img className="source-image" src={post.image} alt="The post photo" />
             ) : (
-              <span className="source-image source-placeholder"><Spark size={24} /></span>
+              <span className="source-image source-placeholder"><BookOpen size={24} /></span>
             )}
             <div className="source-copy">
-              <span className="eyebrow">FROM YOUR {post.platform.toUpperCase()} POST</span>
+              <span className="eyebrow">From {post.platform === "web" ? "your photo" : `your ${post.platform} post`}</span>
               <p>{post.caption || "Photo shared without a caption"}</p>
               {vibe && <span className="source-scene">{vibe.scene.description}</span>}
             </div>
@@ -275,7 +275,7 @@ export default function VibeFlow({ post, onClose }: { post: Post; onClose?: () =
         {!exp && (
           <label className="level-field" htmlFor="vb-learning-level">
             <span>
-              <span className="eyebrow">LEARNING LEVEL</span>
+              <span className="eyebrow">Learning level</span>
               <span className="level-hint">Tailor ideas to a grade or study level</span>
             </span>
             <select
@@ -298,7 +298,7 @@ export default function VibeFlow({ post, onClose }: { post: Post; onClose?: () =
           <section className="ideas-section" aria-label="Things you can make">
             <div className="section-heading">
               <div>
-                <span className="eyebrow">THREE WAYS TO BUILD FROM THIS POST</span>
+                <span className="eyebrow">Ideas for this post</span>
                 <h2>Choose an idea</h2>
               </div>
               <span className="level-pill">{LEARNING_LEVELS.find((level) => level.value === learningLevel)?.shortLabel}</span>

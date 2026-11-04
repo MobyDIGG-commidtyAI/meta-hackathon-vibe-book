@@ -1,16 +1,15 @@
 :root {
   --canvas: #f5f7fc;
-  --surface: #ffffff;
-  --ink: #171d31;
-  --muted: #65708a;
+  --surface: #fff;
+  --ink: #1b2440;
+  --muted: #68728b;
   --border: #e4e8f1;
-  --brand: linear-gradient(135deg, #3675ee 0%, #7452e8 100%);
+  --accent: #6752e8;
+  --accent-soft: #f0f2ff;
   color-scheme: light;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 html,
 body {
@@ -18,7 +17,7 @@ body {
   height: 100%;
   background: var(--canvas);
   color: var(--ink);
-  font: 500 14px/1.5 Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font: 400 14px/1.5 Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -28,59 +27,74 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 16px;
+  min-height: 60px;
+  padding: 10px 18px;
   border-bottom: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.96);
+  background: var(--surface);
 }
 
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
   color: var(--ink);
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 29px;
+  height: 29px;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
 }
 
 #close {
   display: grid;
   place-items: center;
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 8px;
   background: #fff;
   color: var(--muted);
   cursor: pointer;
-  transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+  transition: background 140ms ease, color 140ms ease, border-color 140ms ease;
 }
 
 #close:hover {
-  border-color: #c8d4f0;
-  background: #f4f6ff;
+  border-color: #c8c4f1;
+  background: #f4f2ff;
   color: var(--ink);
+}
+
+:focus-visible {
+  outline: 3px solid #9c91f7;
+  outline-offset: 3px;
 }
 
 #status {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 16px;
+  margin: 20px 18px;
   color: var(--muted);
   font-size: 13px;
-  font-weight: 600;
 }
 
 #status::before {
-  width: 14px;
-  height: 14px;
+  width: 15px;
+  height: 15px;
   flex: 0 0 auto;
-  border: 2px solid #dbe2f2;
-  border-top-color: #625de5;
+  border: 2px solid #dfe2eb;
+  border-top-color: var(--accent);
   border-radius: 50%;
   content: "";
-  animation: panel-spin 800ms linear infinite;
+  animation: panel-spin 850ms linear infinite;
 }
 
 iframe {
@@ -94,18 +108,12 @@ iframe {
   visibility: hidden;
 }
 
-/* The web app draws its own header and close button once it has the post. */
-body.ready iframe {
-  visibility: visible;
-}
-
+body.ready iframe { visibility: visible; }
 body.ready header,
-body.ready #status {
-  display: none;
-}
+body.ready #status { display: none; }
 
-@keyframes panel-spin {
-  to {
-    transform: rotate(360deg);
-  }
+@keyframes panel-spin { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }

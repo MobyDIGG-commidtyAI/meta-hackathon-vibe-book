@@ -48,7 +48,7 @@ export default async function SharePage({ params }: { params: Promise<{ id: stri
     <div className="machine">
       <header className="cap">
         <a className="wordmark" href="/">
-          <Spark /> VibeBook
+          <span className="brand-mark"><Spark size={17} /></span> VibeBook
         </a>
         <a className="btn light" href="/app">
           Make your own
@@ -67,7 +67,7 @@ export default async function SharePage({ params }: { params: Promise<{ id: stri
           <p className="share-tagline">{exp.tagline}</p>
         </div>
         <div className="share-level">
-          <span className="eyebrow">LEARNING LEVEL</span>
+          <span className="eyebrow">Learning level</span>
           <span className="level-pill">{learningShortLabel(exp.learningLevel ?? "general")}</span>
         </div>
         <div className={`labels${remixed ? " stacked" : ""}`}>

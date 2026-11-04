@@ -1,5 +1,5 @@
-// VibeBook content script: puts a ✦ Vibe chip on post photos and opens the panel over the page.
-// Our UI lives in a closed shadow root outside FB's React tree, so FB's CSS and re-renders can't touch it.
+// VibeBook content script: adds a creation shortcut to post photos and opens the panel over the page.
+// Each chip lives in its post or media frame so scrolling follows the page's own layout.
 (() => {
   if (globalThis.__vibebook) return; // the toolbar fallback may inject this file a second time
   globalThis.__vibebook = true;
@@ -9,38 +9,30 @@
   const MIN_W = 220;
   const MIN_H = 160;
   const CAPTION_MAX = 500;
-  // FB's 2026 feed has no role=article on posts; the post wrapper is the nearest div[aria-labelledby].
-  const POST = '[role="article"], [aria-posinset], [role="dialog"], [data-pagelet^="FeedUnit"], div[aria-labelledby]';
+  // FB's 2026 feed has no role=article on some posts; the wrapper is often the nearest div[aria-labelledby].
+  const POST = '[role="article"], [aria-posinset], [data-pagelet^="FeedUnit"], div[aria-labelledby]';
+  const POST_BLOCKER = '[role="dialog"], [aria-modal="true"], [role="feed"]';
   const MESSAGE = '[data-ad-preview="message"], [data-ad-comet-preview="message"]';
-  const PERMALINK = 'a[href*="/posts/"], a[href*="/permalink/"], a[href*="story_fbid="], a[href*="/photo"], a[href*="fbid="]';
+  const PERMALINK = 'a[href*="/posts/"], a[href*="/permalink/"], a[href*="story_fbid="], a[href*="/photo"], a[href*="fbid="], a[href*="/reel/"], a[href*="/watch/"], a[href*="video_id="]';
+  const VIDEO = 'video, [data-video-id], [role="video"]';
 
-  const host = document.createElement("vibebook-root");
-  const root = host.attachShadow({ mode: "closed" });
-  root.innerHTML = `<style>
+  const panelHost = document.createElement("vibebook-root");
+  const panelRoot = panelHost.attachShadow({ mode: "closed" });
+  panelRoot.innerHTML = `<style>
     :host { all: initial; }
-    .chip {
-      position: fixed; left: 0; top: 0; z-index: 2147483646;
-      display: inline-flex; align-items: center; gap: 6px;
-      font: 650 12px/1 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #fff;
-      background: linear-gradient(135deg, #3675ee 0%, #7452e8 100%); border: 1px solid rgba(255, 255, 255, 0.28); border-radius: 10px; padding: 9px 12px; cursor: pointer;
-      box-shadow: 0 4px 14px rgba(30, 43, 91, 0.24);
-    }
-    .chip svg { width: 13px; height: 13px; fill: #fff; }
-    .chip:hover { filter: brightness(1.06); }
-    .chip:focus-visible { outline: 3px solid #b6c9ff; outline-offset: 2px; }
-    .chip[hidden] { display: none; }
     .overlay {
       position: fixed; top: 0; right: 0; z-index: 2147483647;
       width: min(440px, 100vw); height: 100vh;
-      box-shadow: -8px 0 32px rgba(0, 0, 0, 0.45); animation: slide-in 0.25s ease-out;
+      box-shadow: -6px 0 24px rgba(23, 30, 48, 0.2); animation: slide-in 0.22s ease-out;
     }
     .overlay iframe { display: block; width: 100%; height: 100%; border: 0; background: #f5f7fc; }
     @keyframes slide-in { from { transform: translateX(100%); } }
+    @media (prefers-reduced-motion: reduce) { .overlay { animation: none; } }
   </style>`;
-  document.documentElement.append(host);
+  document.documentElement.append(panelHost);
 
-  const tracked = new Set(); // every photo-sized candidate seen on the page
-  const chips = new Map(); // img -> chip, created the first time the img qualifies
+  const chips = new Map(); // post -> its in-frame shadow host and positioning cleanup
+  const positionedContainers = new WeakMap();
   let overlay = null;
 
   function isPhotoUrl(src) {
@@ -51,85 +43,196 @@
     }
   }
 
-  // The part of the img the user can actually see: FB crops grid photos with overflow:hidden wrappers.
-  function visibleRect(img) {
-    let { left, top, right, bottom } = img.getBoundingClientRect();
-    for (let el = img.parentElement, i = 0; el && i < 4; el = el.parentElement, i++) {
-      const style = getComputedStyle(el);
-      if (style.overflowX === "visible" && style.overflowY === "visible") continue;
-      const r = el.getBoundingClientRect();
-      left = Math.max(left, r.left);
-      top = Math.max(top, r.top);
-      right = Math.min(right, r.right);
-      bottom = Math.min(bottom, r.bottom);
+  function largeMedia(el) {
+    if (el.tagName === "IMG" && !isPhotoUrl(el.currentSrc || el.src)) return false;
+    const rect = el.getBoundingClientRect();
+    return rect.width >= MIN_W && rect.height >= MIN_H;
+  }
+
+  function findPost(node, mediaSource = false) {
+    for (let el = node; el && el !== document.body; el = el.parentElement) {
+      if (el.matches(POST_BLOCKER)) return null;
+      if (!el.matches(POST)) continue;
+
+      const hasMessage = el.matches(MESSAGE) || el.querySelector(MESSAGE);
+      const hasPermalink = el.querySelector(PERMALINK);
+      const isFeedUnit = el.matches('[role="article"], [aria-posinset], [data-pagelet^="FeedUnit"]');
+      if (hasMessage || hasPermalink || (mediaSource && isFeedUnit)) return el;
     }
-    return {
-      left: Math.max(left, 0),
-      top: Math.max(top, 0),
-      right: Math.min(right, innerWidth),
-      bottom: Math.min(bottom, innerHeight),
+    return null;
+  }
+
+  function primaryMedia(post) {
+    let bestVideo = null;
+    let videoArea = 0;
+    const videos = [...post.querySelectorAll(VIDEO)];
+    if (post.matches(VIDEO)) videos.unshift(post);
+    for (const video of videos) {
+      if (!largeMedia(video)) continue;
+      const rect = video.getBoundingClientRect();
+      const area = rect.width * rect.height;
+      if (area > videoArea) {
+        bestVideo = video;
+        videoArea = area;
+      }
+    }
+    if (bestVideo) return bestVideo;
+
+    let bestImage = null;
+    let imageArea = 0;
+    const images = [...post.querySelectorAll("img")];
+    if (post.tagName === "IMG") images.unshift(post);
+    for (const img of images) {
+      if (!largeMedia(img)) continue;
+      const rect = img.getBoundingClientRect();
+      const area = rect.width * rect.height;
+      if (area > imageArea) {
+        bestImage = img;
+        imageArea = area;
+      }
+    }
+    if (bestImage) return bestImage;
+
+    const videoFrame = [...post.querySelectorAll('[data-video-id], [role="video"]')].find(largeMedia);
+    return videoFrame || null;
+  }
+
+  // Anchor a media button to the smallest matching frame, not the viewport.
+  function mediaContainer(media) {
+    const mediaRect = media.getBoundingClientRect();
+    let candidate = null;
+    let fallback = null;
+    const first = media.matches("img, video") ? media.parentElement : media;
+    for (let el = first, depth = 0; el && el !== document.body && depth < 6; el = el.parentElement, depth++) {
+      if (el.matches(POST)) break;
+      const rect = el.getBoundingClientRect();
+      if (rect.width < MIN_W || rect.height < MIN_H) continue;
+
+      const style = getComputedStyle(el);
+      const photoLike = el.tagName === "A" || style.overflowX !== "visible" || style.overflowY !== "visible";
+      if (photoLike && !fallback) fallback = el;
+      const closeWidth = rect.width >= mediaRect.width * 0.65 && rect.width <= mediaRect.width * 1.5 + 40;
+      const closeHeight = rect.height >= mediaRect.height * 0.55 && rect.height <= mediaRect.height * 1.5 + 40;
+      if (!closeWidth || !closeHeight) continue;
+
+      if (photoLike) return el;
+      candidate ||= el;
+    }
+    return candidate || fallback;
+  }
+
+  function discoverPosts() {
+    const posts = new Set();
+    for (const message of document.querySelectorAll(MESSAGE)) {
+      const post = findPost(message);
+      if (post) posts.add(post);
+    }
+    for (const media of document.querySelectorAll(`img, ${VIDEO}`)) {
+      if (!largeMedia(media)) continue;
+      const post = findPost(media, true);
+      if (post) posts.add(post);
+    }
+    return posts;
+  }
+
+  function positionContainer(container) {
+    let state = positionedContainers.get(container);
+    if (!state) {
+      state = {
+        count: 0,
+        changed: getComputedStyle(container).position === "static",
+        value: container.style.getPropertyValue("position"),
+        priority: container.style.getPropertyPriority("position"),
+      };
+      if (state.changed) container.style.setProperty("position", "relative");
+      positionedContainers.set(container, state);
+    }
+    state.count++;
+
+    return () => {
+      if (--state.count > 0) return;
+      if (state.changed && container.style.getPropertyValue("position") === "relative") {
+        if (state.value) container.style.setProperty("position", state.value, state.priority);
+        else container.style.removeProperty("position");
+      }
+      positionedContainers.delete(container);
     };
   }
 
-  // False when something outside the img's post (a dialog, a menu) is drawn over that point.
-  function isOnTop(img, x, y) {
-    const post = img.closest(POST) || img.closest('[role="main"]') || document.body;
-    for (const el of document.elementsFromPoint(x, y)) {
-      if (el === host) continue;
-      return el === img || post.contains(el) || el.contains(img);
-    }
-    return false;
-  }
-
-  function makeChip(img) {
-    const chip = document.createElement("button");
-    chip.className = "chip";
-    chip.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.5 5.6 4.9 10 10.5 10.5-5.6.5-10 4.9-10.5 10.5-.5-5.6-4.9-10-10.5-10.5C7.1 11.5 11.5 7.1 12 1.5Z"/></svg>Vibe`;
-    chip.setAttribute("aria-label", "Vibe this post with VibeBook");
+  function makeChip(post, container, media) {
+    const chipHost = document.createElement("vibebook-chip");
+    chipHost.className = media ? "media" : "text";
+    const chipRoot = chipHost.attachShadow({ mode: "closed" });
+    chipRoot.innerHTML = `<style>
+      :host { all: initial; position: absolute; top: 0; right: 0; z-index: 2; display: block; width: 0; height: 0; pointer-events: none; }
+      .chip {
+        all: unset; box-sizing: border-box; position: absolute; top: 10px; right: 10px;
+        display: inline-flex; align-items: center; gap: 6px; pointer-events: auto;
+        font: 550 12px/1 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #fff;
+        background: #6752e8; border: 1px solid #5945d4; border-radius: 8px; padding: 10px 12px; cursor: pointer;
+        box-shadow: 0 2px 8px rgba(26, 34, 57, 0.2);
+      }
+      .chip svg { width: 15px; height: 15px; fill: currentColor; stroke: none; }
+      .chip:hover { border-color: #4938c1; background: #5742d5; }
+      .chip:active { transform: translateY(1px); }
+      .chip:focus-visible { outline: 3px solid #bcb4ff; outline-offset: 2px; }
+      :host(.text) .chip { right: 52px; }
+      @media (prefers-reduced-motion: reduce) { .chip:active { transform: none; } }
+    </style><button class="chip" type="button" aria-label="Vibe this post with VibeBook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.5 5.6 4.9 10 10.5 10.5-5.6.5-10 4.9-10.5 10.5-.5-5.6-4.9-10-10.5-10.5C7.1 11.5 11.5 7.1 12 1.5Z"/></svg>Vibe</button>`;
+    const chip = chipRoot.querySelector("button");
+    const record = { host: chipHost, container, media, releasePosition: positionContainer(container) };
     chip.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
-      open(readPost(img));
+      open(readPost(post, record.media));
     });
-    root.append(chip);
-    return chip;
-  }
-
-  let raf = 0;
-  function schedule() {
-    raf ||= requestAnimationFrame(layout);
-  }
-
-  function layout() {
-    raf = 0;
-    for (const img of tracked) {
-      if (!img.isConnected) {
-        chips.get(img)?.remove();
-        chips.delete(img);
-        tracked.delete(img);
-        continue;
-      }
-      const r = visibleRect(img);
-      const show =
-        r.right - r.left >= MIN_W && r.bottom - r.top >= MIN_H && isOnTop(img, r.right - 40, r.top + 16);
-      let chip = chips.get(img);
-      if (!show) {
-        if (chip) chip.hidden = true;
-        continue;
-      }
-      if (!chip) chips.set(img, (chip = makeChip(img)));
-      chip.hidden = false;
-      chip.style.transform = `translate(${r.right - 10}px, ${r.top + 10}px) translateX(-100%)`;
-    }
+    container.append(chipHost);
+    return record;
   }
 
   let scanTimer = 0;
+  function scheduleScan() {
+    if (scanTimer) return;
+    scanTimer = setTimeout(scan, 100);
+  }
+
+  function removeChip(post) {
+    const chip = chips.get(post);
+    if (!chip) return;
+    chip.host.remove();
+    chip.releasePosition();
+    chips.delete(post);
+  }
+
   function scan() {
     scanTimer = 0;
-    for (const img of document.images) {
-      if (isPhotoUrl(img.currentSrc || img.src)) tracked.add(img);
+    const posts = discoverPosts();
+    for (const post of posts) {
+      const media = primaryMedia(post);
+      const container = media ? mediaContainer(media) || post : post;
+      const rect = container.getBoundingClientRect();
+      const largeEnough = rect.width >= MIN_W && rect.height >= (media ? MIN_H : 40);
+      const existing = chips.get(post);
+      if (!largeEnough) {
+        removeChip(post);
+        continue;
+      }
+      if (existing && (!existing.host.isConnected || existing.container !== container)) removeChip(post);
+      const chip = chips.get(post);
+      if (!chip) chips.set(post, makeChip(post, container, media));
+      else {
+        chip.media = media;
+        chip.host.className = media ? "media" : "text";
+      }
     }
-    schedule();
+
+    for (const post of chips.keys()) {
+      if (!post.isConnected || !posts.has(post)) removeChip(post);
+    }
+  }
+
+  function onMediaLoad(e) {
+    if (e.target instanceof HTMLImageElement || e.target instanceof HTMLVideoElement) scheduleScan();
   }
 
   function cleanUrl(href) {
@@ -140,33 +243,46 @@
     return url.href;
   }
 
-  function readPost(img, post = img?.closest(POST)) {
+  function readPost(post, media = null) {
     const scope = post || document.querySelector('[role="main"]') || document.body;
-    const message = scope.querySelector(MESSAGE);
+    const message = scope.matches(MESSAGE) ? scope : scope.querySelector(MESSAGE);
     const caption = (message || scope).innerText.replace(/\n{3,}/g, "\n\n").trim().slice(0, CAPTION_MAX);
     const link = scope.querySelector(PERMALINK);
+    const video = media?.matches("video") ? media : media?.querySelector("video");
+    const image = media?.matches("img") ? media : media?.querySelector("img");
+    const poster = video?.poster;
+    const imageUrl = poster && isPhotoUrl(poster)
+      ? poster
+      : image && isPhotoUrl(image.currentSrc || image.src)
+        ? image.currentSrc || image.src
+        : null;
     return {
-      imageUrl: img ? img.currentSrc || img.src : null,
+      imageUrl,
       caption,
       postUrl: cleanUrl(link ? link.href : location.href),
       platform: "facebook",
     };
   }
 
-  // Toolbar fallback: the photo with the most on-screen area, or the post under the middle of the screen.
+  // Toolbar fallback: use the post under the middle of the screen, whatever its media type.
   function readCenterPost() {
+    const center = document.elementFromPoint(innerWidth / 2, innerHeight / 2);
+    const centerPost = center && findPost(center, true);
+    if (centerPost) return readPost(centerPost, primaryMedia(centerPost));
+
     let best = null;
     let bestArea = 0;
-    for (const img of document.images) {
-      const r = visibleRect(img);
-      const area = Math.max(0, r.right - r.left) * Math.max(0, r.bottom - r.top);
-      if (r.right - r.left >= 200 && area > bestArea) {
-        best = img;
+    for (const post of discoverPosts()) {
+      const r = post.getBoundingClientRect();
+      const width = Math.max(0, Math.min(r.right, innerWidth) - Math.max(r.left, 0));
+      const height = Math.max(0, Math.min(r.bottom, innerHeight) - Math.max(r.top, 0));
+      const area = width * height;
+      if (width >= MIN_W && area > bestArea) {
+        best = post;
         bestArea = area;
       }
     }
-    if (best) return readPost(best);
-    return readPost(null, document.elementFromPoint(innerWidth / 2, innerHeight / 2)?.closest(POST));
+    return readPost(best, best && primaryMedia(best));
   }
 
   function panelUrl() {
@@ -183,7 +299,7 @@
     frame.src = `${panelUrl()}#${encodeURIComponent(JSON.stringify(payload))}`;
     frame.allow = "clipboard-write";
     overlay.append(frame);
-    root.append(overlay);
+    panelRoot.append(overlay);
   }
 
   function close() {
@@ -202,11 +318,14 @@
     if (msg?.type === "vibebook:open-center") open(readCenterPost());
   });
 
-  new MutationObserver(() => {
-    scanTimer ||= setTimeout(scan, 500);
-  }).observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ["src"] });
-  addEventListener("scroll", schedule, { capture: true, passive: true });
-  addEventListener("resize", schedule, { passive: true });
-  setInterval(schedule, 1000); // FB shows/hides dialogs with class changes the observer doesn't watch
+  new MutationObserver(scheduleScan).observe(document.documentElement, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+    attributeFilter: ["src", "srcset", "data-video-id"],
+  });
+  addEventListener("load", onMediaLoad, true);
+  addEventListener("loadedmetadata", onMediaLoad, true);
+  addEventListener("resize", scheduleScan, { passive: true });
   scan();
 })();

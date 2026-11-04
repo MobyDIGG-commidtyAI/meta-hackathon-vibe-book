@@ -1,4 +1,4 @@
-// One icon family: 24px grid, 2px round strokes, currentColor. The ✦ mark is the brand's own shape.
+// One icon family on a shared 24px grid, with rounded strokes and currentColor.
 type Props = { size?: number; className?: string };
 
 function Svg({ size = 20, className, children }: Props & { children: React.ReactNode }) {
@@ -20,13 +20,11 @@ function Svg({ size = 20, className, children }: Props & { children: React.React
   );
 }
 
-export function Spark({ size = 18, className }: Props) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" className={className} aria-hidden="true">
-      <path fill="currentColor" d="M12 1.5c.5 5.6 4.9 10 10.5 10.5-5.6.5-10 4.9-10.5 10.5-.5-5.6-4.9-10-10.5-10.5C7.1 11.5 11.5 7.1 12 1.5Z" />
-    </svg>
-  );
-}
+export const Spark = ({ size = 18, className }: Props) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" className={className} aria-hidden="true">
+    <path fill="currentColor" d="M12 1.5c.5 5.6 4.9 10 10.5 10.5-5.6.5-10 4.9-10.5 10.5-.5-5.6-4.9-10-10.5-10.5C7.1 11.5 11.5 7.1 12 1.5Z" />
+  </svg>
+);
 
 export const Close = (p: Props) => (
   <Svg {...p}>
@@ -96,6 +94,14 @@ export const Compass = (p: Props) => (
   <Svg {...p}>
     <circle cx="12" cy="12" r="9" />
     <path d="m15.5 8.5-2 5-5 2 2-5 5-2Z" />
+  </Svg>
+);
+
+export const BookOpen = (p: Props) => (
+  <Svg {...p}>
+    <path d="M12 7v14" />
+    <path d="M3 18V5.5A2.5 2.5 0 0 1 5.5 3H12v18H5.5A2.5 2.5 0 0 0 3 23" />
+    <path d="M21 18V5.5A2.5 2.5 0 0 0 18.5 3H12v18h6.5A2.5 2.5 0 0 1 21 23" />
   </Svg>
 );
 

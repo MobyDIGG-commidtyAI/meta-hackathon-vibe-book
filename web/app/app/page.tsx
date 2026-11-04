@@ -1,7 +1,7 @@
 "use client";
 // No-install entry point: choose a photo and/or add its caption, then use the same flow as the extension.
 import { useState } from "react";
-import { Photo, Spark } from "@/components/Icons";
+import { ArrowRight, Photo, Spark } from "@/components/Icons";
 import VibeFlow, { type Post } from "@/components/VibeFlow";
 
 const MAX_SIDE = 1280;
@@ -39,7 +39,7 @@ export default function AppPage() {
     <div className="machine upload-page">
       <header className="cap">
         <a className="wordmark" href="/">
-          <span className="brand-mark"><Spark size={15} /></span> VibeBook
+          <span className="brand-mark"><Spark size={17} /></span> VibeBook
         </a>
       </header>
       <form
@@ -50,7 +50,7 @@ export default function AppPage() {
         }}
       >
         <div className="upload-intro">
-          <span className="eyebrow">START WITH A MOMENT</span>
+          <span className="eyebrow">Start with a photo or story</span>
           <h1 className="page-title">Create from a photo</h1>
           <p className="lede">Add a photo and caption. VibeBook will suggest a few interactive ideas based on what you share.</p>
         </div>
@@ -63,7 +63,7 @@ export default function AppPage() {
               <span className="drop-label">
                 <Photo size={30} />
                 <strong>Choose a photo</strong>
-                <small>JPG or PNG · optional if you add a caption</small>
+                <small>JPG or PNG · A caption works on its own</small>
               </span>
             )}
             <input type="file" accept="image/*" onChange={pick} className="sr-only" />
@@ -71,7 +71,7 @@ export default function AppPage() {
           </label>
         </div>
         <div className="form-sheet">
-          <label htmlFor="vb-caption">Caption <span className="optional-label">OPTIONAL</span></label>
+          <label htmlFor="vb-caption">Caption <span className="optional-label">Optional</span></label>
           <textarea
             id="vb-caption"
             className="field"
@@ -89,9 +89,9 @@ export default function AppPage() {
           </div>
         )}
         <button className="btn big wide" disabled={!image && !caption.trim()}>
-          <Spark /> Find ideas
+          Find ideas <ArrowRight size={18} />
         </button>
-        <p className="upload-footnote">Set a grade or study level before ideas are generated.</p>
+        <p className="upload-footnote">Choose a grade or study level in the next step.</p>
       </form>
     </div>
   );
