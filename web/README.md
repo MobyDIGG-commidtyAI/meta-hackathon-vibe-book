@@ -30,6 +30,12 @@ npm test                      # starts next dev on :3210 (or reuses it)
 VIBEBOOK_BASE_URL=http://localhost:3000 npm test   # against a server that's already running
 ```
 
+`tests/live.spec.ts` checks a deployment against the real model (it spends AI credits, so it's off by default):
+
+```bash
+VIBEBOOK_LIVE=1 VIBEBOOK_BASE_URL=https://vibebook.example.com npx playwright test live
+```
+
 Tests tagged `@new` cover behaviour added in the blue-violet redesign (learning levels, text and video chips).
 To compare with an older checkout, point `VIBEBOOK_BASE_URL`, `VIBEBOOK_EXTENSION_DIR` and `VIBEBOOK_WEB_DIR` at it
 and add `--grep-invert @new`.
