@@ -71,7 +71,7 @@ export default async function SharePage({ params }: { params: Promise<{ id: stri
           <span className="level-pill">{learningShortLabel(exp.learningLevel ?? "general")}</span>
         </div>
         <div className={`labels${remixed ? " stacked" : ""}`}>
-          <span className="clabel over">
+          <span className="clabel">
             Made by {by} from a {exp.source.platform} post
           </span>
           {remixed && (
