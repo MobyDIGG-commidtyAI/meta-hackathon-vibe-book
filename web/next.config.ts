@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // A self-contained server in .next/standalone for the Docker image (web/Dockerfile).
+  output: "standalone",
   // Keep the dev badge out of demo recordings.
   devIndicators: false,
   // lib/prompts.ts reads the design guides from disk at runtime.
