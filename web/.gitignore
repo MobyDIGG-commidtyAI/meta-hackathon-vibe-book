@@ -46,3 +46,7 @@ next-env.d.ts
 
 # local usability-test copies of generated apps
 /public/dev-apps/
+
+# playwright
+/test-results/
+/playwright-report/
