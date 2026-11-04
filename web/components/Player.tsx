@@ -41,9 +41,8 @@ export default function Player(props: {
     };
   }, [id, version]);
 
-  // The capsule stays shut over the iframe until it reports ready, then its halves part.
   return (
-    <div className={`player ${kind}${status.state === "ready" ? "" : " sealed"} ${className ?? ""}`}>
+    <div className={`player ${kind} ${className ?? ""}`}>
       <iframe
         ref={ref}
         key={`${id}-${version}`}
@@ -51,14 +50,16 @@ export default function Player(props: {
         title="VibeBook experience"
         allow="autoplay; fullscreen; clipboard-write; web-share"
       />
-      <div className={`halves${status.state === "ready" ? " open" : ""}`} aria-hidden={status.state === "ready"}>
-        <div className="half top">
-          <span className="msg">{status.state === "failed" ? "This capsule got stuck" : "Opening the capsule…"}</span>
+      <div className={`player-overlay${status.state === "ready" ? " hidden" : ""}`} aria-live="polite" role={status.state === "failed" ? "alert" : undefined}>
+        {status.state === "loading" ? (
+          <span className="spinner" aria-hidden="true" />
+        ) : (
+          <span className="notice-mark">!</span>
+        )}
+        <strong>{status.state === "failed" ? "This experience could not load" : `Preparing your ${kind === "game" ? "game" : "app"}`}</strong>
+        {status.state === "failed" && <p>{status.message}</p>}
+        {status.state === "loading" && <p>Your experience will appear here in a moment.</p>}
         </div>
-        <div className="half bottom">
-          <span className="sub">{kind === "game" ? "Game" : "App"}</span>
-        </div>
-      </div>
     </div>
   );
 }

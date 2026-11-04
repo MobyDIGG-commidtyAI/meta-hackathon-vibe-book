@@ -1,0 +1,106 @@
+<!doctype html>
+<!-- A Facebook-shaped feed for tests/extension.spec.ts. Served at https://www.facebook.com/ by page.route, with
+     photos on a fake fbcdn host, so content.js runs its production code paths (not the localhost DEV shortcut). -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Facebook</title>
+    <style>
+      body { margin: 0; background: #18191a; color: #e4e6eb; font: 15px/1.4 system-ui, sans-serif; }
+      [role="banner"] { position: fixed; top: 0; left: 0; right: 0; z-index: 1; height: 56px; background: #242526; }
+      [role="main"] { padding-top: 72px; }
+      [role="feed"] { width: 500px; margin: 0 auto; display: grid; gap: 16px; }
+      [aria-posinset] { background: #242526; border-radius: 8px; padding-bottom: 12px; }
+      .head { display: flex; gap: 8px; align-items: center; padding: 12px; }
+      .head img { width: 40px; height: 40px; border-radius: 50%; }
+      .head a { color: #e4e6eb; text-decoration: none; }
+      .msg { padding: 0 12px 12px; }
+      .photo { position: relative; display: block; overflow: hidden; height: 300px; }
+      .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .photo .shade { position: absolute; inset: 0; } /* FB puts transparent layers over photos */
+      .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+      .grid a { display: block; overflow: hidden; height: 260px; }
+      .grid img { width: 400px; height: 260px; object-fit: cover; }
+      video { display: block; width: 100%; height: 280px; background: #000; }
+      /* FB's video player: stacked layers, and a transparent click layer over everything that plays/pauses */
+      .player { position: relative; z-index: 0; }
+      .player .layer { position: relative; z-index: 0; }
+      .player .frame { position: relative; z-index: 0; overflow: hidden; }
+      .player .controls { position: absolute; inset: 0; }
+      [role="dialog"] { position: fixed; inset: 60px; background: #242526; border-radius: 8px; padding: 16px; overflow: auto; }
+      [role="dialog"][hidden] { display: none; }
+      .viewer img { display: block; width: 600px; height: 400px; object-fit: cover; }
+      .spacer { height: 1600px; }
+      /* FB shows a tall portrait through a shorter window: the photo's own frame starts above the visible part */
+      .crop { position: relative; overflow: hidden; height: 300px; }
+      .tall { position: absolute; left: 0; right: 0; top: -80px; height: 460px; }
+      .tall img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    </style>
+  </head>
+  <body>
+    <div role="banner">Facebook</div>
+    <div role="main">
+      <div role="feed">
+        <div aria-posinset="1" id="p1">
+          <div class="head">
+            <img src="https://scontent.xx.fbcdn.net/v/avatar-team.jpg" alt="" />
+            <span><a href="/profile/team">VibeBook Team</a> · <a href="/team/posts/12345?__cft__=abc&amp;__tn__=R">2h</a></span>
+          </div>
+          <div class="msg" data-ad-preview="message">Sunrise on Everest. Still can't believe we made it up here</div>
+          <a class="photo" id="p1-photo" href="/photo/?fbid=111"
+            ><img src="https://scontent.xx.fbcdn.net/v/everest.jpg" alt="" /><div class="shade"></div
+          ></a>
+        </div>
+        <div aria-posinset="2" id="p2">
+          <div class="head">
+            <img src="https://scontent.xx.fbcdn.net/v/avatar-ohm.jpg" alt="" />
+            <span><a href="/profile/ohm">Ohm</a> · <a href="/ohm/posts/67890">5h</a></span>
+          </div>
+          <div class="msg" data-ad-preview="message">This app makes me log in every single time. Why.</div>
+        </div>
+        <div aria-posinset="3" id="p3">
+          <div class="head">
+            <img src="https://scontent.xx.fbcdn.net/v/avatar-bird.jpg" alt="" />
+            <span><a href="/profile/bird">Bird</a> · <a href="/bird/posts/24680">1d</a></span>
+          </div>
+          <div class="msg" data-ad-preview="message">Two views from the trip</div>
+          <div class="grid">
+            <a id="p3-a" href="/photo/?fbid=222"><img src="https://scontent.xx.fbcdn.net/v/camp.jpg" alt="" /></a>
+            <a id="p3-b" href="/photo/?fbid=333"><img src="https://scontent.xx.fbcdn.net/v/market.jpg" alt="" /></a>
+          </div>
+        </div>
+        <div aria-posinset="4" id="p4">
+          <div class="head"><span><a href="/shop">Shop</a> · <a href="/shop/posts/555">Sponsored</a></span></div>
+          <div class="msg" data-ad-preview="message">Big sale this weekend</div>
+          <a class="photo" id="p4-photo" href="https://shop.example/"><img src="https://shop.example/banner.jpg" alt="" /></a>
+        </div>
+        <div aria-posinset="5" id="p5">
+          <div class="head"><span><a href="/profile/chin">Chin</a> · <a href="/reel/777">3h</a></span></div>
+          <div class="msg" data-ad-preview="message">Night market walk</div>
+          <div class="player" id="p5-video">
+            <div class="layer"><div class="frame"><video poster="https://scontent.xx.fbcdn.net/v/market-poster.jpg" muted></video></div></div>
+            <div><div class="controls" id="p5-controls"></div></div>
+          </div>
+        </div>
+        <div aria-posinset="6" id="p6">
+          <div class="head"><span><a href="/profile/cha">Cha</a> · <a href="/cha/posts/888">23h</a></span></div>
+          <div class="msg" data-ad-preview="message">Portrait from the trip</div>
+          <div class="crop" id="p6-crop"><div class="tall"><img src="https://scontent.xx.fbcdn.net/v/portrait.jpg" alt="" /></div></div>
+        </div>
+        <div class="spacer"></div>
+      </div>
+    </div>
+    <div role="dialog" id="cover" hidden>A dialog covering the feed.</div>
+    <div role="dialog" id="post-dialog" hidden>
+      <div aria-labelledby="pd-title">
+        <div class="head"><a id="pd-title" href="/team/posts/999">VibeBook Team</a></div>
+        <div class="msg" data-ad-preview="message">Camp night under the stars</div>
+        <a class="photo" id="pd-photo" href="/photo/?fbid=999"><img src="https://scontent.xx.fbcdn.net/v/camp-dialog.jpg" alt="" /></a>
+      </div>
+    </div>
+    <div role="dialog" id="viewer" class="viewer" hidden>
+      <img id="viewer-photo" src="https://scontent.xx.fbcdn.net/v/viewer.jpg" alt="" />
+    </div>
+    <script src="https://vibebook-extension.test/content.js"></script>
+  </body>
+</html>

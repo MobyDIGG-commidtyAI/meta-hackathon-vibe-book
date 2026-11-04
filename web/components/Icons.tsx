@@ -1,4 +1,4 @@
-// One icon family: 24px grid, 2px round strokes, currentColor. The ✦ mark is the brand's own shape.
+// One icon family on a shared 24px grid, with rounded strokes and currentColor.
 type Props = { size?: number; className?: string };
 
 function Svg({ size = 20, className, children }: Props & { children: React.ReactNode }) {
@@ -20,13 +20,11 @@ function Svg({ size = 20, className, children }: Props & { children: React.React
   );
 }
 
-export function Spark({ size = 18, className }: Props) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" className={className} aria-hidden="true">
-      <path fill="currentColor" d="M12 1.5c.5 5.6 4.9 10 10.5 10.5-5.6.5-10 4.9-10.5 10.5-.5-5.6-4.9-10-10.5-10.5C7.1 11.5 11.5 7.1 12 1.5Z" />
-    </svg>
-  );
-}
+export const Spark = ({ size = 18, className }: Props) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" className={className} aria-hidden="true">
+    <path fill="currentColor" d="M12 1.5c.5 5.6 4.9 10 10.5 10.5-5.6.5-10 4.9-10.5 10.5-.5-5.6-4.9-10-10.5-10.5C7.1 11.5 11.5 7.1 12 1.5Z" />
+  </svg>
+);
 
 export const Close = (p: Props) => (
   <Svg {...p}>
@@ -70,5 +68,46 @@ export const Photo = (p: Props) => (
 export const Retry = (p: Props) => (
   <Svg {...p}>
     <path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7" />
+  </Svg>
+);
+
+export const ArrowRight = (p: Props) => (
+  <Svg {...p}>
+    <path d="M4 12h15M13 5l7 7-7 7" />
+  </Svg>
+);
+
+export const Gamepad = (p: Props) => (
+  <Svg {...p}>
+    <path d="M7.5 8h9a4.5 4.5 0 0 1 4.3 3.2l1.1 3.7a2.4 2.4 0 0 1-3.8 2.6l-2.4-1.8H8.3l-2.4 1.8a2.4 2.4 0 0 1-3.8-2.6l1.1-3.7A4.5 4.5 0 0 1 7.5 8Z" />
+    <path d="M8 11v4M6 13h4M16 12h.01M18 14h.01" />
+  </Svg>
+);
+
+export const Puzzle = (p: Props) => (
+  <Svg {...p}>
+    <path d="M9 4h2a2.5 2.5 0 1 1 5 0h2a2 2 0 0 1 2 2v3h-1a2.5 2.5 0 1 0 0 5h1v4a2 2 0 0 1-2 2h-4v-1a2.5 2.5 0 1 0-5 0v1H6a2 2 0 0 1-2-2v-4h1a2.5 2.5 0 1 0 0-5H4V6a2 2 0 0 1 2-2h3Z" />
+  </Svg>
+);
+
+export const Compass = (p: Props) => (
+  <Svg {...p}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="m15.5 8.5-2 5-5 2 2-5 5-2Z" />
+  </Svg>
+);
+
+export const BookOpen = (p: Props) => (
+  <Svg {...p}>
+    <path d="M12 7v14" />
+    <path d="M3 18V5.5A2.5 2.5 0 0 1 5.5 3H12v18H5.5A2.5 2.5 0 0 0 3 23" />
+    <path d="M21 18V5.5A2.5 2.5 0 0 0 18.5 3H12v18h6.5A2.5 2.5 0 0 1 21 23" />
+  </Svg>
+);
+
+export const CircleCheck = (p: Props) => (
+  <Svg {...p}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="m8 12.5 2.5 2.5L16.5 9" />
   </Svg>
 );

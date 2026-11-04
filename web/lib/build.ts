@@ -26,8 +26,9 @@ export async function buildFromCard(input: {
   caption: string;
   postUrl: string;
   imageDataUrl: string | null;
+  learningLevel: string;
 }): Promise<Built> {
-  const text = `${cardBlock(input.suggestion, input.scene)}\n\n${postBlock(input.caption, input.postUrl)}`;
+  const text = `${cardBlock(input.suggestion, input.scene)}\nLearning level: ${input.learningLevel}. Match the experience's vocabulary and difficulty to this level.\n\n${postBlock(input.caption, input.postUrl)}`;
   if (input.suggestion.kind === "game") {
     const genre = gameGenre(input.suggestion);
     const { data, trace } = await chatJSON(

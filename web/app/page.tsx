@@ -1,19 +1,15 @@
-import { Spark } from "@/components/Icons";
+import { ArrowRight, BookOpen, Compass, Gamepad, Puzzle, Spark } from "@/components/Icons";
 
-// Suggestions the live model returned for an Everest sunrise post; the dome photo is a crop of the team's concept slide.
-const EXAMPLE = [
-  { kind: "game", emoji: "🏃", title: "Summit Oxygen Run", pitch: "Dodge crevasses and grab oxygen on your Everest sunrise climb" },
-  { kind: "app", emoji: "🧗", title: "Everest Summit Test", pitch: "See if you could summit Everest with this training quiz" },
-  { kind: "app", emoji: "🎒", title: "Summit Gear Planner", pitch: "Pack your Everest bag perfectly with this smart checklist" },
-] as const;
+const IDEAS = [
+  { kind: "Game", title: "Summit Oxygen Run", pitch: "Collect oxygen as you climb above the clouds.", icon: <Gamepad size={17} /> },
+  { kind: "Puzzle", title: "Everest in Pieces", pitch: "Rebuild the sunrise, one tile at a time.", icon: <Puzzle size={17} /> },
+  { kind: "Learning app", title: "Mountain Field Guide", pitch: "Explore the landscape with a guided mini lesson.", icon: <Compass size={17} /> },
+];
 
 const STEPS = [
-  ["Tap Vibe on a post", "1 tap"],
-  ["Pick one of three toys", "A/B/C"],
-  ["Turn the crank", "~15s"],
-  ["Change it in one line", "~15s"],
-  ["Share the capsule", "1 link"],
-  ["Friends play and remix", "∞"],
+  ["Choose a moment", "Bring in a photo and caption from your feed, or upload one."],
+  ["Set a learning level", "Shape vocabulary and challenge for a school grade or study level."],
+  ["Make it yours", "Choose an idea, refine the result, then share a link people can play."],
 ];
 
 export default function Home() {
@@ -21,113 +17,88 @@ export default function Home() {
     <div className="land">
       <header className="cap land-cap">
         <a className="wordmark" href="/">
-          <Spark /> VibeBook
+          <span className="brand-mark"><Spark size={17} /></span> VibeBook
         </a>
-        <a className="btn light" href="/app">
-          Try it
-        </a>
+        <nav className="land-nav" aria-label="Main navigation">
+          <a href="#how">How it works</a>
+          <a className="btn" href="/app">Try VibeBook <ArrowRight size={16} /></a>
+        </nav>
       </header>
 
-      <section className="land-hero">
-        <div className="land-copy">
-          <h1>
-            Don&apos;t just like it.
-            <br />
-            <span className="sticker">Vibe it.</span>
-          </h1>
-          <p className="lede">
-            Tap <Spark size={14} className="inline-mark" /> Vibe on any Facebook post and it becomes something you can play, use and share. A sunrise on Everest
-            turns into a snowboard run your friends can remix.
-          </p>
-          <div className="land-actions">
-            <a className="btn light big" href="/app">
-              <Spark /> Vibe a photo
-            </a>
-            <a className="text-btn" href="#how">
-              How it works
-            </a>
+      <main>
+        <section className="land-hero">
+          <div className="land-copy">
+            <span className="eyebrow">A learning studio for the things you share</span>
+            <h1>Turn a post into <span>something to play.</span></h1>
+            <p className="lede">Turn a photo and its story into a small game or useful app people can play, learn from, and share.</p>
+            <div className="land-actions">
+              <a className="btn big" href="/app">Make it playable <ArrowRight size={18} /></a>
+              <a className="land-secondary" href="#how">See how it works</a>
+            </div>
+            <p className="land-aside"><BookOpen size={16} /> Learning levels from elementary through university</p>
           </div>
-          <p className="land-aside">Or add the Chrome extension and vibe posts right in your feed.</p>
-        </div>
 
-        <div className="demo-machine" aria-label="Example: what VibeBook suggests for an Everest post">
-          <div className="dome-wrap">
-            <div className="dome">
+          <article className="product-preview" aria-label="Example ideas created from an Everest sunrise post">
+            <div className="preview-image-wrap">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/landing/everest.jpg" alt="A sunrise over Himalayan peaks" />
+              <img src="/landing/everest.jpg" alt="Sunrise over Himalayan peaks" />
+              <span className="preview-photo-index">Field note 01 <span>·</span> Everest Base Camp</span>
             </div>
-          </div>
-          <div className="sheet">
-            <h2 className="sheet-title">Pick one to make</h2>
-            <div className="toys chosen">
-              {EXAMPLE.map((card, i) => (
-                <div key={card.title} className={`toy${i === 0 ? " is-chosen" : ""}`}>
-                  <span className="toy-letter">{"ABC"[i]}</span>
-                  <span className={`capsule ${card.kind}`}>
-                    <span>{card.emoji}</span>
-                  </span>
-                  <span>
-                    <span className="toy-title">
-                      {card.title}
-                      <span className={`tag ${card.kind}`}>{card.kind}</span>
-                    </span>
-                    <span className="toy-pitch">{card.pitch}</span>
-                  </span>
-                </div>
-              ))}
+            <div className="preview-content">
+              <div className="preview-source">
+                <span className="eyebrow">From this photo</span>
+                <strong>Sunrise above the clouds</strong>
+                <small>A view from the trail to Everest Base Camp.</small>
+              </div>
+              <div className="preview-level">
+                <span>Learning level</span>
+                <strong>Grades 7–9 <span>Middle school</span></strong>
+              </div>
+              <div className="preview-ideas-head">
+                <div><span className="eyebrow">Made for this story</span><h2>Choose an idea</h2></div>
+                <span>3 options</span>
+              </div>
+              <div className="preview-ideas">
+                {IDEAS.map((idea, index) => (
+                  <article key={idea.title} className={`preview-idea${index === 0 ? " selected" : ""}`}>
+                    <span className="preview-idea-icon">{idea.icon}</span>
+                    <span className="preview-idea-copy"><small>{idea.kind}</small><strong>{idea.title}</strong><span>{idea.pitch}</span></span>
+                    <span className="preview-index">0{index + 1}</span>
+                  </article>
+                ))}
+              </div>
+              <div className="preview-note">
+                <BookOpen size={17} />
+                <span><small>Example experience</small><strong>Mountain Field Guide</strong><span>Interactive lesson · 4 min</span></span>
+                <ArrowRight size={16} />
+              </div>
             </div>
-          </div>
-          <div className="chute" aria-hidden="true">
-            <span className="crank" />
-            <span className="chute-text">
-              <strong>A is ready: Summit Oxygen Run</strong>
-              <span>A game, ready to play</span>
-            </span>
-            <span className="capsule">
-              <span>🏃</span>
-            </span>
-          </div>
-          <p className="demo-caption">Real suggestions from Meta Muse Spark for an Everest sunrise post</p>
-        </div>
-      </section>
+          </article>
+        </section>
 
-      <section className="land-how" id="how">
-        <div>
-          <h2>From post to playable in about a minute</h2>
-          <p className="lede">
-            No prompt to write. VibeBook reads the photo and caption, offers three things worth making, and builds the
-            one you pick while you watch.
-          </p>
-        </div>
-        <div className="receipt" aria-label="How it works">
-          <div className="receipt-title">
-            <span>VibeBook slip</span>
-            <span>No. 000001</span>
+        <section className="land-how" id="how">
+          <div className="how-intro">
+            <span className="eyebrow">A simple creation flow</span>
+            <h2>From a post to something people can explore.</h2>
+            <p className="lede">Start with something you already care about. VibeBook makes the first draft, and you shape what comes next.</p>
           </div>
-          {STEPS.map(([step, time]) => (
-            <div key={step} className="rline done">
-              <span className="mark">✓</span>
-              <span>{step}</span>
-              <span>{time}</span>
-            </div>
-          ))}
-          <div className="receipt-trace">
-            <div className="rline">
-              <span className="mark" />
-              <span>Built with Meta Muse Spark</span>
-              <span />
-            </div>
+          <div className="steps-list">
+            {STEPS.map(([title, body], index) => (
+              <article className="step-card" key={title}>
+                <span className="step-number">0{index + 1}</span>
+                <div><h3>{title}</h3><p>{body}</p></div>
+              </article>
+            ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="land-close">
-        <h2>The next social action isn&apos;t Like. It&apos;s Create.</h2>
-        <a className="btn light big" href="/app">
-          <Spark /> Vibe a photo
-        </a>
-        <p className="land-foot">Made for the Meta Global AI Developer Hackathon, November 2026.</p>
-      </section>
+        <section className="land-close">
+          <span className="brand-mark large"><Spark size={20} /></span>
+          <h2>Make the next thing worth sharing.</h2>
+          <a className="btn big" href="/app">Start with a photo <ArrowRight size={18} /></a>
+          <p className="land-foot">VibeBook · Create, play, and learn together</p>
+        </section>
+      </main>
     </div>
   );
 }
