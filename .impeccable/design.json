@@ -1,162 +1,252 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-03T12:42:10.769209+00:00",
+  "generatedAt": "2026-11-04T00:00:00Z",
   "title": "Design System: VibeBook",
   "extensions": {
     "colorMeta": {
-      "machine-red": {
+      "accent": {
         "role": "primary",
-        "displayName": "Machine Red",
-        "canonical": "oklch(57.7% 0.202 28.3)",
+        "displayName": "Studio Violet",
+        "canonical": "oklch(54.9% 0.216 283.0)",
         "tonalRamp": [
-          "#220000",
-          "#4e0000",
-          "#810003",
-          "#b90008",
-          "#e23e34",
-          "#ff7465",
-          "#ffb3a8",
-          "#ffe9e5"
+          "#0a002f",
+          "#23006c",
+          "#3f0bad",
+          "#593fd5",
+          "#7765fd",
+          "#9997fe",
+          "#c1c3fe",
+          "#ecedff"
         ]
       },
-      "red-hot": {
+      "accent-strong": {
         "role": "primary",
-        "displayName": "Hot Red",
-        "canonical": "oklch(60.7% 0.208 28.2)",
+        "displayName": "Deep Violet",
+        "canonical": "oklch(49.0% 0.211 281.5)",
         "tonalRamp": [
-          "#230000",
-          "#4e0000",
-          "#810003",
-          "#b90009",
-          "#e43a31",
-          "#fe7465",
-          "#feb3a8",
-          "#fee9e6"
+          "#09002f",
+          "#22016d",
+          "#3c13ac",
+          "#5642d3",
+          "#7368fb",
+          "#9798fe",
+          "#bfc3ff",
+          "#ebedfe"
         ]
       },
-      "red-deep": {
+      "accent-pressed": {
         "role": "primary",
-        "displayName": "Top-Cap Red",
-        "canonical": "oklch(50.5% 0.180 28.5)",
+        "displayName": "Pressed Violet",
+        "canonical": "oklch(45.0% 0.202 280.5)",
         "tonalRamp": [
-          "#220000",
-          "#4e0000",
-          "#810002",
-          "#b1211b",
-          "#d94b3f",
-          "#fe7465",
-          "#ffb3a8",
-          "#fee9e5"
+          "#09002f",
+          "#20016e",
+          "#391ba8",
+          "#5346cf",
+          "#716bf6",
+          "#9599fe",
+          "#bec4fe",
+          "#ebedfe"
         ]
       },
-      "red-ink": {
+      "accent-soft": {
         "role": "primary",
-        "displayName": "Printed Red",
-        "canonical": "oklch(47.6% 0.172 28.5)",
+        "displayName": "Violet Mist",
+        "canonical": "oklch(96.3% 0.018 279.1)",
         "tonalRamp": [
-          "#220000",
-          "#4e0000",
-          "#810002",
-          "#ae2720",
-          "#d64f42",
-          "#ff7464",
-          "#ffb3a8",
-          "#ffe9e5"
+          "#090a12",
+          "#23242e",
+          "#40414b",
+          "#5f606b",
+          "#80818d",
+          "#a2a4b0",
+          "#c6c8d5",
+          "#eceefa"
         ]
       },
-      "chute": {
+      "focus-ring": {
         "role": "primary",
-        "displayName": "Chute Maroon",
-        "canonical": "oklch(35.3% 0.124 28.5)",
+        "displayName": "Focus Violet",
+        "canonical": "oklch(66.5% 0.165 287.1)",
         "tonalRamp": [
-          "#230000",
-          "#4e0000",
-          "#761e17",
-          "#9b4037",
-          "#c16257",
-          "#e88578",
-          "#feb3a8",
-          "#fee9e6"
+          "#0c002c",
+          "#270069",
+          "#422792",
+          "#5f4bb8",
+          "#7e6ede",
+          "#a094ff",
+          "#c5c1fe",
+          "#edecff"
         ]
       },
-      "lemon": {
+      "accent-blue": {
         "role": "secondary",
-        "displayName": "Game Lemon",
-        "canonical": "oklch(86.1% 0.159 86.4)",
+        "displayName": "Game Blue",
+        "canonical": "oklch(58.9% 0.194 261.8)",
         "tonalRamp": [
-          "#130900",
-          "#312300",
-          "#543e00",
-          "#7a5c00",
-          "#a37c04",
-          "#cd9d03",
-          "#f6c130",
-          "#ffedc5"
+          "#000729",
+          "#001d5e",
+          "#00369b",
+          "#1856cd",
+          "#3b7bf4",
+          "#72a3ff",
+          "#adcafe",
+          "#e6effe"
         ]
       },
-      "lemon-cream": {
+      "blue-wash": {
         "role": "secondary",
-        "displayName": "Lemon Cream",
-        "canonical": "oklch(96.4% 0.049 91.8)",
+        "displayName": "Blue Wash",
+        "canonical": "oklch(96.4% 0.017 267.8)",
         "tonalRamp": [
-          "#120a00",
-          "#2e2405",
-          "#4b4123",
-          "#6b6141",
-          "#8d8261",
-          "#b0a583",
-          "#d4c9a6",
-          "#faeeca"
+          "#080b12",
+          "#21252e",
+          "#3e424b",
+          "#5d616b",
+          "#7e828d",
+          "#a0a5b0",
+          "#c4c9d5",
+          "#e9eefa"
         ]
       },
-      "lemon-faded": {
+      "accent-purple": {
         "role": "secondary",
-        "displayName": "Faded Lemon",
-        "canonical": "oklch(93.8% 0.080 90.3)",
+        "displayName": "App Purple",
+        "canonical": "oklch(56.0% 0.215 287.8)",
         "tonalRamp": [
-          "#130900",
-          "#302300",
-          "#523f00",
-          "#735f25",
-          "#958047",
-          "#b8a36a",
-          "#ddc88d",
-          "#ffeebe"
+          "#0d002c",
+          "#280068",
+          "#4703aa",
+          "#623bd1",
+          "#8162f9",
+          "#a193ff",
+          "#c6c1fe",
+          "#edecff"
         ]
       },
-      "mint": {
+      "level-ink": {
         "role": "tertiary",
-        "displayName": "App Mint",
-        "canonical": "oklch(73.7% 0.131 173.1)",
+        "displayName": "Level Blue",
+        "canonical": "oklch(51.2% 0.162 264.4)",
         "tonalRamp": [
-          "#00100a",
-          "#002d23",
-          "#004e3e",
-          "#00725c",
-          "#00987c",
-          "#26bf9d",
-          "#5ae5c1",
-          "#beffea"
+          "#000036",
+          "#010e72",
+          "#143696",
+          "#3159bc",
+          "#507ce2",
+          "#77a2ff",
+          "#afc9fe",
+          "#e7effe"
         ]
       },
-      "sky": {
+      "level-wash": {
         "role": "tertiary",
-        "displayName": "Share Sky",
-        "canonical": "oklch(68.2% 0.172 252.9)",
+        "displayName": "Level Wash",
+        "canonical": "oklch(96.7% 0.015 270.0)",
         "tonalRamp": [
-          "#000a25",
-          "#00254d",
-          "#00427e",
-          "#0061b4",
-          "#1f83e5",
-          "#5ca8ff",
-          "#a3cdff",
-          "#e4f0ff"
+          "#090b12",
+          "#22252d",
+          "#3f424a",
+          "#5e616a",
+          "#7f828c",
+          "#a1a5af",
+          "#c5c9d3",
+          "#eaeef9"
         ]
       },
-      "paper": {
+      "level-line": {
+        "role": "tertiary",
+        "displayName": "Level Line",
+        "canonical": "oklch(91.6% 0.040 274.8)",
+        "tonalRamp": [
+          "#07091c",
+          "#1f2339",
+          "#3b4058",
+          "#5a6079",
+          "#7b819b",
+          "#9da4bf",
+          "#c1c8e4",
+          "#eaeefe"
+        ]
+      },
+      "success": {
+        "role": "tertiary",
+        "displayName": "Done Green",
+        "canonical": "oklch(53.0% 0.064 182.7)",
+        "tonalRamp": [
+          "#000f0c",
+          "#022c27",
+          "#0a4d45",
+          "#326d64",
+          "#548f86",
+          "#77b3a8",
+          "#9bd7cd",
+          "#bffdf2"
+        ]
+      },
+      "danger": {
+        "role": "tertiary",
+        "displayName": "Error Rose",
+        "canonical": "oklch(55.2% 0.111 10.1)",
+        "tonalRamp": [
+          "#1e0006",
+          "#4b0019",
+          "#702234",
+          "#954353",
+          "#ba6473",
+          "#e18795",
+          "#ffb0bb",
+          "#ffe8ea"
+        ]
+      },
+      "danger-wash": {
+        "role": "tertiary",
+        "displayName": "Error Wash",
+        "canonical": "oklch(98.0% 0.005 3.3)",
+        "tonalRamp": [
+          "#0d0a0b",
+          "#282425",
+          "#454142",
+          "#646061",
+          "#858182",
+          "#a8a4a4",
+          "#ccc8c9",
+          "#f2edee"
+        ]
+      },
+      "danger-ink": {
+        "role": "tertiary",
+        "displayName": "Error Ink",
+        "canonical": "oklch(44.1% 0.062 5.2)",
+        "tonalRamp": [
+          "#1e0008",
+          "#3d1621",
+          "#5e333d",
+          "#80525c",
+          "#a3737d",
+          "#c895a0",
+          "#eeb9c3",
+          "#fee8ec"
+        ]
+      },
+      "canvas": {
         "role": "neutral",
-        "displayName": "Paper",
+        "displayName": "Studio Canvas",
+        "canonical": "oklch(97.6% 0.007 268.5)",
+        "tonalRamp": [
+          "#0a0b0e",
+          "#242529",
+          "#404246",
+          "#5f6165",
+          "#808287",
+          "#a3a5aa",
+          "#c7c9ce",
+          "#eceef3"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface",
         "canonical": "oklch(100.0% 0.000 89.9)",
         "tonalRamp": [
           "#0b0b0b",
@@ -169,49 +259,109 @@
           "#eeeeee"
         ]
       },
+      "surface-muted": {
+        "role": "neutral",
+        "displayName": "Surface Muted",
+        "canonical": "oklch(95.9% 0.005 275.0)",
+        "tonalRamp": [
+          "#0a0b0d",
+          "#242528",
+          "#414245",
+          "#606164",
+          "#818286",
+          "#a4a5a8",
+          "#c8c9cd",
+          "#edeef2"
+        ]
+      },
       "ink": {
         "role": "neutral",
         "displayName": "Ink",
-        "canonical": "oklch(19.1% 0.000 89.9)",
+        "canonical": "oklch(26.7% 0.054 269.1)",
         "tonalRamp": [
-          "#0b0b0b",
-          "#252525",
-          "#424242",
-          "#616161",
-          "#828282",
-          "#a5a5a5",
-          "#c9c9c9",
-          "#eeeeee"
+          "#040821",
+          "#1a233f",
+          "#36415f",
+          "#556080",
+          "#7581a3",
+          "#97a4c8",
+          "#bbc8ed",
+          "#e8eefe"
         ]
       },
-      "ink-2": {
+      "slate": {
         "role": "neutral",
-        "displayName": "Ink Grey",
-        "canonical": "oklch(39.8% 0.000 89.9)",
+        "displayName": "Slate",
+        "canonical": "oklch(44.1% 0.037 271.0)",
         "tonalRamp": [
-          "#0b0b0b",
-          "#252525",
-          "#424242",
-          "#616161",
-          "#828282",
-          "#a5a5a5",
-          "#c9c9c9",
-          "#eeeeee"
+          "#060a1b",
+          "#1e2437",
+          "#3a4156",
+          "#596077",
+          "#7a8299",
+          "#9ca4bd",
+          "#c0c8e2",
+          "#e8eeff"
         ]
       },
-      "ink-3": {
+      "muted": {
         "role": "neutral",
-        "displayName": "Ink Light",
-        "canonical": "oklch(52.8% 0.000 89.9)",
+        "displayName": "Muted",
+        "canonical": "oklch(55.3% 0.041 267.9)",
         "tonalRamp": [
-          "#0b0b0b",
-          "#252525",
-          "#424242",
-          "#616161",
-          "#828282",
-          "#a5a5a5",
-          "#c9c9c9",
-          "#eeeeee"
+          "#050a1c",
+          "#1c2439",
+          "#394158",
+          "#576179",
+          "#78829c",
+          "#9aa5bf",
+          "#bec9e5",
+          "#e8eefe"
+        ]
+      },
+      "subtle": {
+        "role": "neutral",
+        "displayName": "Subtle",
+        "canonical": "oklch(68.9% 0.033 267.1)",
+        "tonalRamp": [
+          "#060a19",
+          "#1e2535",
+          "#3a4254",
+          "#596174",
+          "#7a8297",
+          "#9ca5ba",
+          "#c0c9df",
+          "#e8eefe"
+        ]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Border",
+        "canonical": "oklch(93.1% 0.013 266.7)",
+        "tonalRamp": [
+          "#090b11",
+          "#22252c",
+          "#3f4249",
+          "#5e6169",
+          "#7f828a",
+          "#a1a5ad",
+          "#c5c9d2",
+          "#eaeef7"
+        ]
+      },
+      "field-border": {
+        "role": "neutral",
+        "displayName": "Field Border",
+        "canonical": "oklch(89.4% 0.013 266.7)",
+        "tonalRamp": [
+          "#090b11",
+          "#22252c",
+          "#3f4249",
+          "#5e6169",
+          "#7f828a",
+          "#a1a5ad",
+          "#c5c9d2",
+          "#eaeef8"
         ]
       }
     },
@@ -222,107 +372,110 @@
       },
       "headline": {
         "displayName": "Headline",
-        "purpose": "Landing section heads and page titles."
+        "purpose": "Page and share titles, landing section heads."
       },
       "title": {
         "displayName": "Title",
-        "purpose": "Display-card title, form-sheet heads, toy labels."
+        "purpose": "Form-sheet heads, the ideas heading, the share ticket head."
       },
       "body": {
         "displayName": "Body",
-        "purpose": "Default UI text."
+        "purpose": "Default text; ledes step up to 15-16px in Muted."
       },
       "body-strong": {
         "displayName": "Body Strong",
-        "purpose": "Toy titles, button labels, form labels."
+        "purpose": "Idea titles, result label, button labels."
       },
       "label": {
-        "displayName": "Kind Tag",
-        "purpose": "GAME / APP tags, uppercase."
+        "displayName": "Label",
+        "purpose": "Form labels, hints, notices, activity heading."
       },
-      "receipt": {
-        "displayName": "Receipt",
-        "purpose": "Receipt slip only: build steps and timings."
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Kind tags, stamps, level pill, index numbers, activity rows."
       }
     },
     "shadows": [
       {
-        "name": "lift",
-        "value": "0 18px 40px rgba(86, 4, 0, 0.36), 0 3px 8px rgba(86, 4, 0, 0.22)",
-        "purpose": "Paper resting on the machine: display card, form sheets, notices."
+        "name": "button-rest",
+        "value": "0 2px 4px rgba(27, 36, 64, 0.12)",
+        "purpose": "Primary and secondary buttons at rest."
       },
       {
-        "name": "press",
-        "value": "inset 0 1px 0 rgba(255, 255, 255, 0.35), inset 0 -2px 0 rgba(0, 0, 0, 0.18), 0 4px 10px rgba(110, 10, 4, 0.32)",
-        "purpose": "Moulded buttons and the extension chip."
+        "name": "button-hover",
+        "value": "0 4px 8px rgba(27, 36, 64, 0.16)",
+        "purpose": "Button hover, with a 1px lift."
       },
       {
-        "name": "recess",
-        "value": "inset 0 6px 14px rgba(0, 0, 0, 0.45), 0 1px 0 rgba(255, 255, 255, 0.18)",
-        "purpose": "The chute."
+        "name": "button-active",
+        "value": "0 1px 2px rgba(27, 36, 64, 0.12)",
+        "purpose": "Button pressed, dropped 1px."
       },
       {
-        "name": "dome-ring",
-        "value": "0 0 0 6px rgba(255, 255, 255, 0.2), 0 0 0 7.5px rgba(60, 4, 0, 0.55), 0 16px 30px rgba(86, 4, 0, 0.45)",
-        "purpose": "Clear acrylic rim around the post photo."
+        "name": "shadow-soft",
+        "value": "0 8px 24px rgba(27, 36, 64, 0.1)",
+        "purpose": "Landing product preview only (--shadow-soft)."
       },
       {
-        "name": "player",
-        "value": "0 20px 40px rgba(86, 4, 0, 0.42)",
-        "purpose": "Capsule player shell."
+        "name": "field-focus",
+        "value": "0 0 0 3px rgba(77, 84, 140, 0.12)",
+        "purpose": "Focused field ring, with a violet border."
+      },
+      {
+        "name": "chip",
+        "value": "0 2px 8px rgba(26, 34, 57, 0.2)",
+        "purpose": "Vibe chip on a Facebook post."
+      },
+      {
+        "name": "overlay",
+        "value": "-6px 0 24px rgba(23, 30, 48, 0.2)",
+        "purpose": "Extension panel's left edge over the feed."
       }
     ],
     "motion": [
       {
-        "name": "ease-out",
-        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
-        "purpose": "The one easing for every state change."
+        "name": "hover",
+        "value": "140ms (default ease) on transform, background, border-color, color, box-shadow",
+        "purpose": "Buttons, cards, fields, icon buttons, drop zone."
       },
       {
-        "name": "crank-turn",
-        "value": "rotate 0 to 360deg, 1.1s ease-out",
-        "purpose": "Crank turns once when a toy is picked."
+        "name": "lift",
+        "value": "translateY(-1px) on hover, translateY(1px) on press",
+        "purpose": "Buttons and idea cards."
       },
       {
-        "name": "capsule-drop",
-        "value": "translateY(-70px) rotate(-40deg) to rest, 0.7s, 0.35s delay",
-        "purpose": "Capsule falls into the chute slot."
+        "name": "player-reveal",
+        "value": "opacity and visibility 200ms",
+        "purpose": "Player loading overlay fades out when ready."
       },
       {
-        "name": "halves-part",
-        "value": "transform 0.75s ease-out, opacity 0.6s",
-        "purpose": "Capsule halves part to reveal the ready player."
-      },
-      {
-        "name": "shell-unseal",
-        "value": "border-radius 50% / 24% to 30px, 0.7s ease-out",
-        "purpose": "Sealed capsule shell becomes a rounded screen."
-      },
-      {
-        "name": "receipt-print",
-        "value": "clip-path reveal + translateY(-4px), 0.32s",
-        "purpose": "Live receipt lines print in; landing receipts are static."
-      },
-      {
-        "name": "cursor-blink",
-        "value": "1s steps(2, start), only while a step is busy",
-        "purpose": "Receipt print head cursor."
+        "name": "spinner",
+        "value": "rotate 360deg, 850ms linear infinite",
+        "purpose": "Loading card, player overlay, busy build step, extension panel status; only while loading."
       },
       {
         "name": "overlay-slide",
-        "value": "translateX(100%) to 0, 0.25s ease-out",
+        "value": "translateX(100%) to 0, 0.22s ease-out",
         "purpose": "Extension overlay opening."
       },
       {
         "name": "reduced-motion",
         "value": "all animation and transition 0.01ms",
-        "purpose": "prefers-reduced-motion respected globally."
+        "purpose": "prefers-reduced-motion respected on web, panel, overlay and chip."
       }
     ],
     "breakpoints": [
       {
-        "name": "land-stack",
-        "value": "820px"
+        "name": "stack",
+        "value": "900px"
+      },
+      {
+        "name": "phone",
+        "value": "520px"
+      },
+      {
+        "name": "short-phone",
+        "value": "520px wide and max-height 860px"
       }
     ]
   },
@@ -331,126 +484,120 @@
       "name": "Primary Button",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "Moulded machine-red pill for the main action on paper or in the flow.",
-      "html": "<button class=\"ds-btn\">Vibe a photo</button>",
-      "css": ".ds-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border:0;border-radius:999px;background:var(--red,#d7322a);color:#fff;font:800 15px/1.2 var(--font-ui,'M PLUS Rounded 1c'),system-ui,sans-serif;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -2px 0 rgba(0,0,0,.18),0 4px 10px rgba(110,10,4,.32);cursor:pointer;transition:transform .12s cubic-bezier(.16,1,.3,1),background .15s,box-shadow .12s}.ds-btn:hover{background:var(--red-hot,#e43a31)}.ds-btn:active{transform:translateY(1px);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 2px 4px rgba(110,10,4,.3)}.ds-btn:focus-visible{outline:3px solid var(--lemon,#ffc93c);outline-offset:2px}"
+      "description": "Violet 8px-cornered button for the one action that moves the flow forward.",
+      "html": "<button class=\"ds-btn\">Find ideas <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M4 12h15M13 5l7 7-7 7\"/></svg></button>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:9px 14px;border:1px solid transparent;border-radius:8px;background:var(--accent,#6752e8);color:#fff;font:550 13px/1.2 var(--font-inter, Inter), Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;white-space:nowrap;box-shadow:0 2px 4px rgba(27,36,64,.12);cursor:pointer;transition:transform 140ms,background 140ms,box-shadow 140ms}.ds-btn:hover{transform:translateY(-1px);background:var(--accent-strong,#5541d2);box-shadow:0 4px 8px rgba(27,36,64,.16)}.ds-btn:active{transform:translateY(1px);background:#4937c0;box-shadow:0 1px 2px rgba(27,36,64,.12)}.ds-btn:focus-visible{outline:3px solid #8f80f2;outline-offset:3px}"
     },
     {
-      "name": "Light Button",
+      "name": "Secondary and Outline Buttons",
       "kind": "button",
-      "refersTo": "button-light",
-      "description": "White pill with printed-red text; the main CTA on the red body.",
-      "html": "<div style=\"background:#d7322a;padding:20px\"><button class=\"ds-btn-light\">Try it</button></div>",
-      "css": ".ds-btn-light{padding:11px 18px;border:0;border-radius:999px;background:#fff;color:var(--red-ink,#a8201a);font:800 15px/1.2 var(--font-ui,'M PLUS Rounded 1c'),system-ui,sans-serif;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -2px 0 rgba(0,0,0,.18),0 4px 10px rgba(110,10,4,.32);cursor:pointer;transition:background .15s}.ds-btn-light:hover{background:var(--lemon-cream,#fff3cf)}.ds-btn-light:focus-visible{outline:3px solid #ffc93c;outline-offset:2px}"
-    },
-    {
-      "name": "Ink Button",
-      "kind": "button",
-      "refersTo": "button-ink",
-      "description": "Near-black pill for secondary actions on paper (Share, Retry).",
-      "html": "<button class=\"ds-btn-ink\">Share</button>",
-      "css": ".ds-btn-ink{padding:11px 18px;border:0;border-radius:999px;background:#141414;color:#fff;font:800 15px/1.2 var(--font-ui,'M PLUS Rounded 1c'),system-ui,sans-serif;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -2px 0 rgba(0,0,0,.18),0 4px 10px rgba(110,10,4,.32);cursor:pointer}.ds-btn-ink:hover{background:#2b2b2b}.ds-btn-ink:focus-visible{outline:3px solid #ffc93c;outline-offset:2px}"
+      "refersTo": "button-secondary",
+      "description": "White bordered button with slate text (secondary) and its transparent outline sibling.",
+      "html": "<button class=\"ds-btn2\">Try again</button> <button class=\"ds-btn2 ds-outline\">Open</button>",
+      "css": ".ds-btn2{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:9px 14px;border:1px solid var(--border,#e4e8f1);border-radius:8px;background:var(--surface,#fff);color:#4b5268;font:550 13px/1.2 var(--font-inter, Inter), Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;box-shadow:0 2px 4px rgba(27,36,64,.12);cursor:pointer;transition:transform 140ms,background 140ms,border-color 140ms}.ds-btn2.ds-outline{background:transparent;box-shadow:none}.ds-btn2:hover{transform:translateY(-1px);border-color:#c2c7d5;background:#f8f8fa}.ds-btn2:active{transform:translateY(1px)}.ds-btn2:focus-visible{outline:3px solid #8f80f2;outline-offset:3px}"
     },
     {
       "name": "Field",
       "kind": "input",
       "refersTo": "field",
-      "description": "White field with a 2px ink stroke and red caret, inside form sheets.",
-      "html": "<input class=\"ds-field\" placeholder=\"add a rocket boost\">",
-      "css": ".ds-field{width:100%;padding:10px 13px;border:2px solid #141414;border-radius:12px;background:#fff;color:#141414;caret-color:#d7322a;font:600 15px/1.5 var(--font-ui,'M PLUS Rounded 1c'),system-ui,sans-serif}.ds-field::placeholder{color:#6b6b6b;font-weight:500}.ds-field:focus-visible{outline:3px solid #ffc93c;outline-offset:2px}"
+      "description": "40px white field with a 1px border; focus turns the border violet with a soft ring.",
+      "html": "<input class=\"ds-field\" placeholder=\"Add the story behind this photo…\">",
+      "css": ".ds-field{width:100%;min-height:40px;padding:9px 11px;border:1px solid #d8dce5;border-radius:7px;background:#fff;color:var(--ink,#1b2440);caret-color:var(--accent,#6752e8);font:400 13px/1.4 var(--font-inter, Inter), Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;outline:none;transition:border-color 140ms,box-shadow 140ms}.ds-field::placeholder{color:#959bad}.ds-field:focus{border-color:var(--accent,#6752e8);box-shadow:0 0 0 3px rgba(77,84,140,.12)}.ds-field:disabled{background:#f3f4f7}"
     },
     {
-      "name": "Top Cap",
+      "name": "Top Bar",
       "kind": "nav",
-      "refersTo": "knob",
-      "description": "Sticky red-deep header with the wordmark and the round close knob.",
-      "html": "<header class=\"ds-cap\"><span class=\"ds-mark\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"#ffc93c\" d=\"M12 1.5c.5 5.6 4.9 10 10.5 10.5-5.6.5-10 4.9-10.5 10.5-.5-5.6-4.9-10-10.5-10.5C7.1 11.5 11.5 7.1 12 1.5Z\"/></svg>VibeBook</span><button class=\"ds-knob\" aria-label=\"Close\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"><path d=\"M6 6l12 12M18 6L6 18\"/></svg></button></header>",
-      "css": ".ds-cap{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#b5261f;box-shadow:inset 0 -1px 0 rgba(255,255,255,.16),0 6px 14px rgba(86,4,0,.28)}.ds-mark{display:inline-flex;align-items:center;gap:7px;font:400 19px/1 var(--font-display,'Dela Gothic One'),sans-serif;color:#fff}.ds-knob{display:grid;place-items:center;width:34px;height:34px;border:0;border-radius:50%;background:#fff;color:#141414;box-shadow:inset 0 -2px 0 rgba(0,0,0,.12),0 3px 8px rgba(86,4,0,.35);cursor:pointer;transition:transform .15s cubic-bezier(.16,1,.3,1)}.ds-knob:hover{transform:rotate(90deg)}.ds-knob:focus-visible{outline:3px solid #ffc93c;outline-offset:2px}"
+      "refersTo": "brand-mark",
+      "description": "Sticky white 60px bar with the violet Spark brand mark, wordmark and 36px close button.",
+      "html": "<header class=\"ds-cap\"><span class=\"ds-word\"><span class=\"ds-mark\"><svg width=\"17\" height=\"17\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M12 1.5c.5 5.6 4.9 10 10.5 10.5-5.6.5-10 4.9-10.5 10.5-.5-5.6-4.9-10-10.5-10.5C7.1 11.5 11.5 7.1 12 1.5Z\"/></svg></span> VibeBook</span><button class=\"ds-icon-btn\" aria-label=\"Close\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 6l12 12M18 6L6 18\"/></svg></button></header>",
+      "css": ".ds-cap{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:60px;padding:10px 20px;border-bottom:1px solid var(--border,#e4e8f1);background:#fff}.ds-word{display:inline-flex;align-items:center;gap:9px;color:var(--ink,#1b2440);font:600 15px/1 var(--font-inter, Inter), Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif}.ds-mark{display:grid;place-items:center;width:29px;height:29px;border-radius:8px;background:var(--accent,#6752e8);color:#fff}.ds-icon-btn{display:grid;place-items:center;width:36px;height:36px;border:1px solid var(--border,#e4e8f1);border-radius:7px;background:#fff;color:var(--muted,#68728b);cursor:pointer;transition:background 140ms,color 140ms,border-color 140ms}.ds-icon-btn:hover{border-color:#c6c1f1;background:#f7f6ff;color:var(--accent-strong,#5541d2)}.ds-icon-btn:focus-visible{outline:3px solid #8f80f2;outline-offset:3px}"
     },
     {
-      "name": "Kind Tags and Change Stamps",
+      "name": "Level Pill and Change Stamps",
       "kind": "chip",
-      "refersTo": "kind-tag-game",
-      "description": "Kind tags (lemon GAME, mint APP) and change stamps stepping down by age.",
-      "html": "<span class=\"ds-tag\">Game</span> <span class=\"ds-tag ds-app\">App</span> <span class=\"ds-stamp ds-new\">faster</span> <span class=\"ds-stamp ds-prev\">+ obstacle</span> <span class=\"ds-stamp ds-old\">night</span>",
-      "css": ".ds-tag{display:inline-block;padding:1px 8px;border:1.5px solid #141414;border-radius:999px;background:#ffc93c;color:#141414;font:800 10.5px/1.5 var(--font-ui,'M PLUS Rounded 1c'),sans-serif;letter-spacing:.08em;text-transform:uppercase}.ds-tag.ds-app{background:#2fc4a2}.ds-stamp{display:inline-block;padding:3px 10px;border-radius:999px;font:800 12.5px/1.4 var(--font-ui,'M PLUS Rounded 1c'),sans-serif}.ds-new{background:#ffc93c;color:#141414;box-shadow:inset 0 0 0 1.5px #141414}.ds-prev{background:#ffe9ad;color:#474747;box-shadow:inset 0 0 0 1.5px rgba(20,20,20,.45)}.ds-old{color:#6b6b6b;box-shadow:inset 0 0 0 1.5px rgba(20,20,20,.28)}"
+      "refersTo": "level-pill",
+      "description": "Learning-level pill, plus change stamps that step back from violet mist to grey to white by age.",
+      "html": "<span class=\"ds-level\">Grades 7–9</span> <span class=\"ds-stamp\">faster runner</span> <span class=\"ds-stamp ds-prev\">night sky</span>",
+      "css": ".ds-level{display:inline-block;padding:4px 8px;border:1px solid #dbe2ff;border-radius:6px;background:#f0f4ff;color:#365fc2;font:500 11px/1.3 var(--font-inter, Inter), Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif}.ds-stamp{display:inline-block;padding:3px 7px;border:1px solid #dfe2eb;border-radius:5px;background:var(--accent-soft,#f0f2ff);color:var(--accent,#6752e8);font:400 11px/1.3 var(--font-inter, Inter), Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif}.ds-stamp.ds-prev{background:#f4f5f7;color:#737b8f}"
     },
     {
-      "name": "Display Card Toy Row",
+      "name": "Idea Card",
       "kind": "card",
-      "refersTo": "display-card",
-      "description": "Paper display card with lettered toy rows; chosen prints solid, others dashed.",
-      "html": "<section class=\"ds-sheet\"><h2 class=\"ds-sheet-title\">Pick one to make</h2><button class=\"ds-toy ds-chosen\"><span class=\"ds-letter\">A</span><span class=\"ds-capsule\"></span><span><b>Summit Oxygen Run</b><small>Dodge crevasses and grab oxygen</small></span></button><button class=\"ds-toy ds-faded\"><span class=\"ds-letter\">B</span><span class=\"ds-capsule ds-mint\"></span><span><b>Everest Summit Test</b><small>A training quiz</small></span></button></section>",
-      "css": ".ds-sheet{padding:22px 18px 14px;border-radius:22px;background:#fff;color:#141414;box-shadow:0 18px 40px rgba(86,4,0,.36),0 3px 8px rgba(86,4,0,.22);outline:1.5px solid #141414;outline-offset:-8px}.ds-sheet-title{margin:0;padding:0 6px 10px;font:400 22px/1.1 var(--font-display,'Dela Gothic One'),sans-serif}.ds-toy{display:grid;grid-template-columns:36px 48px 1fr;gap:12px;align-items:center;width:100%;padding:13px 8px;border:0;border-radius:14px;background:transparent;color:#141414;text-align:left;font:500 15px/1.4 var(--font-ui,'M PLUS Rounded 1c'),sans-serif;cursor:pointer;transition:background .2s,opacity .3s}.ds-toy:hover{background:#fff3cf}.ds-toy:focus-visible{outline:3px solid #ffc93c;outline-offset:2px}.ds-toy b{display:block;font-weight:800;font-size:16px}.ds-toy small{display:block;color:#474747;font-size:13.5px}.ds-letter{display:grid;place-items:center;width:34px;height:34px;border:2px solid currentColor;border-radius:50%;font:400 17px/1 var(--font-display,'Dela Gothic One'),sans-serif}.ds-capsule{width:48px;aspect-ratio:1;border-radius:50%;background:linear-gradient(180deg,#fbfbfb 0 49%,#141414 49% 53%,#ffc93c 53% 100%);box-shadow:inset 0 0 0 2px #141414}.ds-capsule.ds-mint{background:linear-gradient(180deg,#fbfbfb 0 49%,#141414 49% 53%,#2fc4a2 53% 100%)}.ds-chosen{background:#141414;color:#fff}.ds-chosen:hover{background:#141414}.ds-chosen small{color:#e2e2e2}.ds-faded{opacity:.42}.ds-faded .ds-letter{border-style:dashed}"
+      "refersTo": "idea-card",
+      "description": "Signature row: kind-coloured icon tile, tag and number, title and pitch, arrow; chosen turns purple.",
+      "html": "<div class=\"ds-ideas\"><button class=\"ds-idea ds-chosen\"><span class=\"ds-tile\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7.5 8h9a4.5 4.5 0 0 1 4.3 3.2l1.1 3.7a2.4 2.4 0 0 1-3.8 2.6l-2.4-1.8H8.3l-2.4 1.8a2.4 2.4 0 0 1-3.8-2.6l1.1-3.7A4.5 4.5 0 0 1 7.5 8Z\"/><path d=\"M8 11v4M6 13h4M16 12h.01M18 14h.01\"/></svg></span><span class=\"ds-copy\"><span class=\"ds-meta\"><span class=\"ds-tag ds-game\">Runner game</span><span class=\"ds-num\">01</span></span><span class=\"ds-title\">Summit Oxygen Run</span><span class=\"ds-pitch\">Collect oxygen as you climb above the clouds.</span></span><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M4 12h15M13 5l7 7-7 7\"/></svg></button><button class=\"ds-idea\"><span class=\"ds-tile\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"m15.5 8.5-2 5-5 2 2-5 5-2Z\"/></svg></span><span class=\"ds-copy\"><span class=\"ds-meta\"><span class=\"ds-tag ds-app\">Learning app</span><span class=\"ds-num\">02</span></span><span class=\"ds-title\">Mountain Field Guide</span><span class=\"ds-pitch\">Explore the landscape with a guided mini lesson.</span></span><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M4 12h15M13 5l7 7-7 7\"/></svg></button></div>",
+      "css": ".ds-ideas{display:flex;flex-direction:column;gap:7px;padding:16px;background:var(--canvas,#f5f7fc)}.ds-idea{display:grid;grid-template-columns:38px minmax(0,1fr) 18px;gap:12px;align-items:center;width:100%;padding:12px;border:1px solid var(--border,#e4e8f1);border-radius:9px;background:#fff;color:#81889a;text-align:left;font:400 14px/1.4 var(--font-inter, Inter), Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;cursor:pointer;transition:transform 140ms,border-color 140ms,background 140ms}.ds-idea:hover{transform:translateY(-1px);border-color:#b9b8f4;background:#fcfcff}.ds-idea:focus-visible{outline:3px solid #8f80f2;outline-offset:3px}.ds-tile{display:grid;place-items:center;width:38px;height:38px;border-radius:7px;background:#eef3ff;color:var(--accent-blue,#3675ee)}.ds-copy{display:flex;flex-direction:column;gap:3px;min-width:0}.ds-meta{display:flex;justify-content:space-between;gap:8px}.ds-tag{font-size:11px;font-weight:500;line-height:1.3}.ds-game{color:var(--accent-blue,#3675ee)}.ds-app{color:var(--accent-purple,#7452e8)}.ds-num{color:var(--subtle,#929bb0);font-size:11px;font-variant-numeric:tabular-nums}.ds-title{color:var(--ink,#1b2440);font-size:14px;font-weight:550;line-height:1.35}.ds-pitch{color:var(--muted,#68728b);font-size:12px}.ds-chosen{border-color:var(--accent-purple,#7452e8);background:#f4f1ff;color:var(--accent-purple,#7452e8)}.ds-chosen .ds-tile{background:var(--accent-purple,#7452e8);color:#fff}"
     },
     {
-      "name": "Receipt Slip",
+      "name": "Form Sheet",
+      "kind": "card",
+      "refersTo": "form-sheet",
+      "description": "White bordered sheet holding a heading, label and field row with its button.",
+      "html": "<form class=\"ds-sheet\"><div><h2 class=\"ds-h\">Refine your creation</h2><p class=\"ds-sub\">Describe one change and we’ll update it.</p></div><label class=\"ds-lbl\">What would you like to change?</label><div class=\"ds-row\"><input class=\"ds-in\" placeholder=\"Make the runner faster\"><button class=\"ds-go\" type=\"button\">Change</button></div></form>",
+      "css": ".ds-sheet{display:flex;flex-direction:column;gap:10px;padding:15px;border:1px solid var(--border,#e4e8f1);border-radius:10px;background:#fff;color:var(--ink,#1b2440);font:400 14px/1.55 var(--font-inter, Inter), Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif}.ds-h{margin:0;font-size:22px;font-weight:500;line-height:1.22;letter-spacing:-.02em}.ds-sub{margin:3px 0 0;color:var(--muted,#68728b);font-size:12px}.ds-lbl{color:#424a60;font-size:12px;font-weight:500}.ds-row{display:flex;gap:8px}.ds-in{flex:1;min-height:40px;padding:9px 11px;border:1px solid #d8dce5;border-radius:7px;font:400 13px/1.4 var(--font-inter, Inter), Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;outline:none;caret-color:var(--accent,#6752e8);transition:border-color 140ms,box-shadow 140ms}.ds-in:focus{border-color:var(--accent,#6752e8);box-shadow:0 0 0 3px rgba(77,84,140,.12)}.ds-go{min-height:40px;padding:9px 14px;border:0;border-radius:8px;background:var(--accent,#6752e8);color:#fff;font:550 13px/1.2 var(--font-inter, Inter), Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;box-shadow:0 2px 4px rgba(27,36,64,.12);cursor:pointer;transition:background 140ms,transform 140ms}.ds-go:hover{background:var(--accent-strong,#5541d2);transform:translateY(-1px)}.ds-go:focus-visible{outline:3px solid #8f80f2;outline-offset:3px}"
+    },
+    {
+      "name": "Vibe Chip",
       "kind": "custom",
-      "refersTo": "receipt",
-      "description": "Dot-matrix slip with torn edges; the only place DotGothic16 appears.",
-      "html": "<div class=\"ds-receipt\"><div class=\"ds-rt\"><span>VibeBook slip</span><span>No. 000001</span></div><div class=\"ds-rl\"><span>✓</span><span>Turn the crank</span><span>~15s</span></div><div class=\"ds-rl\"><span>✓</span><span>Share the capsule</span><span>1 link</span></div></div>",
-      "css": ".ds-receipt{position:relative;margin:12px;padding:16px 16px 14px;background:#fff;color:#141414;font:400 13.5px/1.55 var(--font-receipt,'DotGothic16'),ui-monospace,monospace;letter-spacing:.02em;text-transform:uppercase;font-variant-numeric:tabular-nums;filter:drop-shadow(0 10px 14px rgba(86,4,0,.3))}.ds-receipt::before,.ds-receipt::after{content:'';position:absolute;left:0;right:0;height:8px;background:linear-gradient(135deg,#fff 50%,transparent 50%) 0 0/12px 8px repeat-x,linear-gradient(225deg,#fff 50%,transparent 50%) 6px 0/12px 8px repeat-x}.ds-receipt::before{top:-8px;transform:scaleY(-1)}.ds-receipt::after{bottom:-8px}.ds-rt{display:flex;justify-content:space-between;padding-bottom:6px;margin-bottom:6px;border-bottom:1.5px dashed rgba(20,20,20,.32)}.ds-rl{display:grid;grid-template-columns:18px 1fr auto;gap:6px}"
+      "refersTo": "vibe-chip",
+      "description": "The extension's violet button pinned to the top-right of each Facebook photo.",
+      "html": "<button class=\"ds-chip\"><svg width=\"15\" height=\"15\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M12 1.5c.5 5.6 4.9 10 10.5 10.5-5.6.5-10 4.9-10.5 10.5-.5-5.6-4.9-10-10.5-10.5C7.1 11.5 11.5 7.1 12 1.5Z\"/></svg>Vibe</button>",
+      "css": ".ds-chip{display:inline-flex;align-items:center;gap:6px;padding:10px 12px;border:1px solid #5945d4;border-radius:8px;background:#6752e8;color:#fff;font:550 12px/1 system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;box-shadow:0 2px 8px rgba(26,34,57,.2);cursor:pointer}.ds-chip:hover{border-color:#4938c1;background:#5742d5}.ds-chip:active{transform:translateY(1px)}.ds-chip:focus-visible{outline:3px solid #bcb4ff;outline-offset:2px}"
     }
   ],
   "narrative": {
-    "northStar": "The Capsule Machine",
-    "overview": "VibeBook is a gashapon machine for your feed. Every surface is the machine's glossy red enamel body; content sits on things the machine holds or prints: the post inside a clear acrylic dome, three toys lettered A, B and C on a white printed display card, a crank and chute where the capsule drops, a two-tone capsule that opens into the player, and a receipt slip that prints each build step. The world is tactile, toy-like and confident, lit from the upper left with soft plastic sheen, and it never reads as a dark AI tool.\n\nDensity is a single handheld column (560px max) in the create flow and share page; the landing widens to a two-column machine-and-copy layout. Colour carries meaning, not decoration: the capsule base colour names what you get (lemon for a game, mint for an app, sky for anything shared or remixed). Motion belongs to the machine's mechanics and only fires when state changes.",
+    "northStar": "The Learning Studio",
+    "overview": "VibeBook is a calm, light study desk for turning a post into something to play or learn from. Every surface is a white card with a hairline border resting on a cool blue-white canvas; one violet accent marks the thing to do next, and two kind colours (blue for games, purple for apps) tell you what an idea will become. The look is clean, quiet and legible rather than playful, so the photo, the ideas and the finished experience carry the colour.\n\nDensity is a single reading column (660px, 610px on upload) for the create flow, upload and share page, under a 60px white top bar with the wordmark. The landing widens to a two-column copy-and-preview hero and a two-column how-it-works list, then collapses to one column. Motion is small and functional: 140ms colour and 1px lift transitions on hover, a spinner while something is genuinely loading, and a short slide when the extension overlay opens. The direction is adapted from unslop by Damir Sokolovsky (CC BY 4.0), as credited in the global stylesheet.",
     "keyCharacteristics": [
-      "Machine-red enamel owns every background, header band and primary button.",
-      "White printed paper (display card, forms, receipt, labels) with ink rules carries all reading content.",
-      "Two-tone capsules: clear top, ink seam, coloured base; base colour = kind.",
-      "Heavy Japanese display gothic for titles and letters, rounded gothic for UI, dot-matrix only on the receipt.",
-      "Soft, warm-tinted drop shadows and inset plastic highlights; no flat-black glows.",
-      "Motion only at state changes: crank turn, capsule drop, halves parting, receipt lines printing."
+      "One face, Inter, at 400 / 500 / 550 / 600; headings at 500 with tight tracking.",
+      "White cards with a 1px cool-grey border on a light blue-white canvas; light mode only.",
+      "A single violet accent fills primary buttons, the brand mark, the feed chip and the chosen state.",
+      "Blue means game, purple means app, on the idea tile and its tag.",
+      "Small, consistent corners (5-12px); circles only for status dots and spinners.",
+      "Shadow only on things that press or float: buttons, the landing preview, the chip, the overlay."
     ],
     "rules": [
       {
+        "name": "The One Violet Rule",
+        "body": "Violet is the only filled colour in the interface. It marks the primary action and the chosen thing; everything else is white with a 1px border.",
+        "section": "colors"
+      },
+      {
         "name": "The Kind Colour Rule",
-        "body": "Lemon means GAME, mint means APP, sky means share or remix. A capsule colour is never used for decoration; lemon additionally carries focus and selection because it is the machine's highlight.",
+        "body": "Blue means GAME and purple means APP. The kind colour sits on the idea's icon tile, and is not used for decoration.",
         "section": "colors"
       },
       {
-        "name": "The Paper Holds the Reading Rule",
-        "body": "Long or dense text sits on paper in ink. On red, only white text, and anything smaller than body (down to 13px captions) is set at 700 weight or above.",
-        "section": "colors"
-      },
-      {
-        "name": "The Dot-Matrix Stays on the Slip Rule",
-        "body": "DotGothic16 appears only on receipt paper. Never on buttons, headings, or the red body.",
+        "name": "The One Face Rule",
+        "body": "Inter is the only typeface on web, panel and link-preview card. Weight 600 is reserved for the landing display, the wordmark and the link-preview card; headings elsewhere sit at 500.",
         "section": "typography"
       },
       {
-        "name": "The Display Is Printed Rule",
-        "body": "Dela Gothic One is used at weight 400 only, for titles, circled toy letters and the wordmark. Never for running text.",
-        "section": "typography"
-      },
-      {
-        "name": "The Warm Shadow Rule",
-        "body": "Every shadow that falls on the red body or on paper is tinted with the machine's own dark red. Grey glows on the machine read as a dark AI tool and break the world.",
+        "name": "The Border Defines Rule",
+        "body": "Containers are separated by a 1px border, not a shadow. A shadow means the element presses or floats above the page.",
         "section": "elevation"
       },
       {
-        "name": "The Capsule Shell Rule",
-        "body": "Until the toy is out, the player shell is the capsule itself (50% / 24% radius); when it opens it eases to a 30px rounded screen.",
+        "name": "The Tight Radius Rule",
+        "body": "Corners stay between 5px and 12px and grow with the element. Nothing is fully rounded except status dots and spinners.",
         "section": "shapes"
       }
     ],
     "dos": [
-      "**Do** keep machine-red (#d7322a) as the body and white as the only text colour on it.",
-      "**Do** put reading content on paper with ink, using Lift to set it on the machine.",
-      "**Do** colour every capsule, tag and label by kind: lemon GAME, mint APP, sky share/remix.",
-      "**Do** tint shadows with the machine's dark red and give curved plastic an upper-left highlight.",
-      "**Do** show progress as receipt lines that print, and show choice as solid versus dashed.",
-      "**Do** age change stamps from new (lemon, solid ring) to prev (faded) to old (outline only).",
-      "**Do** use 2px round-stroke SVG icons on a 24px grid in currentColor, and the ✦ mark as the brand's own shape."
+      "**Do** keep every app surface light: Studio Canvas behind, white cards with a 1px Border in front.",
+      "**Do** reserve Studio Violet for the primary action, the brand mark, the chip and the chosen state.",
+      "**Do** colour ideas by kind: Game Blue for games, App Purple for apps.",
+      "**Do** set everything in Inter, with headings at 500 and tight negative tracking.",
+      "**Do** use 2px round-stroke SVG icons on a 24px grid in currentColor, and the four-point Spark as the brand's own mark.",
+      "**Do** keep hover motion to 140ms colour, border and 1px lift changes, and honour prefers-reduced-motion."
     ],
     "donts": [
-      "**Don't** use spinners or idle looping animation; animate only when state changes.",
-      "**Don't** use DotGothic16 anywhere but receipt paper.",
-      "**Don't** set red text on paper in machine-red; use printed red (#a8201a).",
-      "**Don't** use a capsule colour as decoration where it doesn't mean its kind.",
-      "**Don't** drift toward a dark panel with a neon purple accent and a column of identical rounded cards.",
-      "**Don't** use neutral grey glows for elevation on the machine body or on paper."
+      "**Don't** add a second typeface or a display face.",
+      "**Don't** use pill or fully rounded shapes for buttons, cards or tags.",
+      "**Don't** use shadows to separate cards; use the border.",
+      "**Don't** fill large areas with violet or use a kind colour where it doesn't mean its kind.",
+      "**Don't** set new text in Subtle; it is below 4.5:1 on white.",
+      "**Don't** introduce a dark theme; the system is light-only."
     ]
   }
 }
