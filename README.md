@@ -27,6 +27,19 @@ Without Upstash env vars, experiences are stored as JSON files in `web/.data/`.
 
 Then load the extension: `chrome://extensions` → Developer mode → **Load unpacked** → select `extension/`. See [extension/README.md](extension/README.md) for the full test checklist and the mock feed.
 
+## Deploy with Docker
+
+```bash
+cp .env.example .env                           # add OPENROUTER_API_KEY (and DOMAIN + APP_URL for a server)
+docker compose up -d --build                   # http://localhost:3000
+docker compose --profile https up -d --build   # https://$DOMAIN, certificate by Caddy + Let's Encrypt
+extension/package.sh https://your-domain       # the extension pointed at your server, in dist/
+```
+
+The stack is the web app, a bundled Redis that keeps experiences, photos and rate limits, and an optional Caddy
+for HTTPS. The step-by-step guide, in Thai, is [docs/DEPLOY.md](docs/DEPLOY.md). It covers settings, backups,
+troubleshooting and a live check of every feature.
+
 ## How it works
 
 1. **Read the post:** the extension reads the photo (fbcdn) and caption, and hands them to the web panel.
