@@ -5,6 +5,8 @@ Chrome MV3, plain JS, no build step.
 ## ชี้ไปที่ server
 `config.js` บอกว่าเว็บ VibeBook อยู่ที่ไหน ค่าเริ่มต้นคือ `http://localhost:3000` (`npm run dev` ใน `web/`) ก่อนอัดวิดีโอหรือส่งให้คนอื่น ให้เปลี่ยนเป็น production URL แล้วกด ↻ ที่การ์ด extension
 
+ถ้าเว็บอยู่บน server ของตัวเอง (ดู `docs/DEPLOY.md`) ให้รัน `extension/package.sh https://โดเมนของคุณ` จะได้ extension ที่ชี้ server นั้นใน `dist/vibebook-extension` โดยไม่ต้องแก้ไฟล์ในนี้
+
 ## ติดตั้ง
 1. เปิด `chrome://extensions` → เปิด **Developer mode** (มุมขวาบน)
 2. **Load unpacked** → เลือกโฟลเดอร์ `extension/` นี้

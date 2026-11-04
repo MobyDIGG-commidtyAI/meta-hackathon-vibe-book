@@ -1,0 +1,6 @@
+# HTTPS in front of the web app. Caddy gets and renews the certificate for $DOMAIN on its own
+# (DOMAIN=localhost uses Caddy's local CA, for trying the setup on your own machine).
+{$DOMAIN} {
+	encode zstd gzip
+	reverse_proxy web:3000
+}

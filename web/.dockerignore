@@ -1,0 +1,11 @@
+node_modules
+.next
+.data
+.env*
+!.env.example
+test-results
+playwright-report
+tests
+playwright.config.ts
+Dockerfile
+.dockerignore

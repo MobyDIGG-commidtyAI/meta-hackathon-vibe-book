@@ -1,0 +1,61 @@
+# VibeBook: the web app, Redis for experiences and rate limits, and an optional HTTPS proxy.
+#   cp .env.example .env                    # add your AI key
+#   docker compose up -d --build            # http://localhost:3000
+#   docker compose --profile https up -d    # https://$DOMAIN, certificate from Let's Encrypt
+# docs/DEPLOY.md has the full guide.
+name: vibebook
+
+services:
+  web:
+    build: ./web
+    image: vibebook-web
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      # The bundled Redis behind an Upstash-compatible REST API, unless .env points at a real Upstash database.
+      KV_REST_API_URL: ${KV_REST_API_URL:-http://redis-http}
+      KV_REST_API_TOKEN: ${KV_REST_API_TOKEN:-${REDIS_HTTP_TOKEN:-vibebook-local}}
+      APP_URL: ${APP_URL:-http://localhost:3000}
+    ports:
+      - "${WEB_BIND:-127.0.0.1}:${WEB_PORT:-3000}:3000"
+    depends_on:
+      - redis-http
+
+  redis:
+    image: redis:7.4.6-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+
+  redis-http:
+    image: hiett/serverless-redis-http:0.0.10
+    restart: unless-stopped
+    environment:
+      SRH_MODE: env
+      SRH_TOKEN: ${REDIS_HTTP_TOKEN:-vibebook-local}
+      SRH_CONNECTION_STRING: redis://redis:6379
+    depends_on:
+      - redis
+
+  caddy:
+    image: caddy:2.8.4-alpine
+    profiles: ["https"]
+    restart: unless-stopped
+    environment:
+      DOMAIN: ${DOMAIN:-localhost}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - web
+
+volumes:
+  redis-data:
+  caddy-data:
+  caddy-config:

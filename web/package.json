@@ -9,7 +9,6 @@
     "test": "playwright test"
   },
   "dependencies": {
-    "@upstash/ratelimit": "^2.2.0",
     "@upstash/redis": "^1.41.0",
     "nanoid": "^6.0.2",
     "next": "16.4.4",

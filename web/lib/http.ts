@@ -1,6 +1,5 @@
 // Shared bits for route handlers: errors, edit tokens, rate limits.
 import { createHash, randomBytes } from "node:crypto";
-import { Ratelimit } from "@upstash/ratelimit";
 import { AiError } from "./ai";
 import { redisClient, type Experience } from "./store";
 
@@ -34,16 +33,23 @@ export function canEdit(exp: Experience, req: Request) {
   return !!token && hashToken(token) === exp.editTokenHash;
 }
 
-// Per-IP limit on the routes that call the model. No limit in local dev (no Redis).
-const ratelimit = redisClient
-  ? new Ratelimit({ redis: redisClient, limiter: Ratelimit.slidingWindow(30, "10 m"), prefix: "rl" })
-  : null;
+// Per-IP limit on the routes that call the model: 30 calls per 10-minute window. No limit in local dev (no Redis).
+// Plain INCR + EXPIRE, so it runs on Upstash and on a self-hosted Redis alike (@upstash/ratelimit's
+// scripts use an Upstash-only flag).
+const LIMIT = 30;
+const WINDOW_SECONDS = 600;
 
 export async function rateLimited(req: Request, bucket: string) {
-  if (!ratelimit) return null;
+  if (!redisClient) return null;
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-  const { success } = await ratelimit.limit(`${bucket}:${ip}`);
-  return success ? null : fail(429, "Too many requests — try again in a few minutes.");
+  const key = `rl:${bucket}:${ip}:${Math.floor(Date.now() / 1000 / WINDOW_SECONDS)}`;
+  try {
+    const [count] = await redisClient.pipeline().incr(key).expire(key, WINDOW_SECONDS).exec<[number, number]>();
+    return count > LIMIT ? fail(429, "Too many requests — try again in a few minutes.") : null;
+  } catch (err) {
+    console.error("rate limit unavailable, letting the request through", err);
+    return null;
+  }
 }
 
 export function parseDataUrl(dataUrl: string) {
