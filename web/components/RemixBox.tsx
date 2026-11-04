@@ -1,5 +1,5 @@
 "use client";
-// Remix on a shared page: refill the machine with one sentence, get a new link that credits the original.
+// Remix a shared experience and credit the original creator on the new link.
 import { useState } from "react";
 import { Spark } from "./Icons";
 import { CHANGE_EXAMPLES, type Genre } from "@/lib/spec";
@@ -53,7 +53,7 @@ export default function RemixBox({ id, kind, genre }: { id: string; kind: "game"
         disabled={busy}
         autoFocus
       />
-      <label htmlFor="vb-remix-name">Your name on the capsule</label>
+      <label htmlFor="vb-remix-name">Creator name</label>
       <input
         id="vb-remix-name"
         className="field"

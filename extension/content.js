@@ -21,20 +21,20 @@
     .chip {
       position: fixed; left: 0; top: 0; z-index: 2147483646;
       display: inline-flex; align-items: center; gap: 6px;
-      font: 800 13px/1 "M PLUS Rounded 1c", system-ui, -apple-system, "Segoe UI", sans-serif; color: #fff;
-      background: #d7322a; border: 0; border-radius: 999px; padding: 8px 13px 8px 11px; cursor: pointer;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), inset 0 -2px 0 rgba(0, 0, 0, 0.18), 0 4px 14px rgba(0, 0, 0, 0.35);
+      font: 650 12px/1 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #fff;
+      background: linear-gradient(135deg, #3675ee 0%, #7452e8 100%); border: 1px solid rgba(255, 255, 255, 0.28); border-radius: 10px; padding: 9px 12px; cursor: pointer;
+      box-shadow: 0 4px 14px rgba(30, 43, 91, 0.24);
     }
-    .chip svg { width: 13px; height: 13px; fill: #ffc93c; }
-    .chip:hover { background: #e43a31; }
-    .chip:focus-visible { outline: 3px solid #ffc93c; outline-offset: 2px; }
+    .chip svg { width: 13px; height: 13px; fill: #fff; }
+    .chip:hover { filter: brightness(1.06); }
+    .chip:focus-visible { outline: 3px solid #b6c9ff; outline-offset: 2px; }
     .chip[hidden] { display: none; }
     .overlay {
       position: fixed; top: 0; right: 0; z-index: 2147483647;
       width: min(440px, 100vw); height: 100vh;
       box-shadow: -8px 0 32px rgba(0, 0, 0, 0.45); animation: slide-in 0.25s ease-out;
     }
-    .overlay iframe { display: block; width: 100%; height: 100%; border: 0; background: #d7322a; }
+    .overlay iframe { display: block; width: 100%; height: 100%; border: 0; background: #f5f7fc; }
     @keyframes slide-in { from { transform: translateX(100%); } }
   </style>`;
   document.documentElement.append(host);

@@ -6,6 +6,7 @@ import Player from "@/components/Player";
 import RemixBox from "@/components/RemixBox";
 import { genreOf, kindLabel } from "@/lib/spec";
 import { getExperience } from "@/lib/store";
+import { learningShortLabel } from "@/lib/learning";
 
 export const dynamic = "force-dynamic";
 
@@ -64,6 +65,10 @@ export default async function SharePage({ params }: { params: Promise<{ id: stri
         <div>
           <h1 className="share-title">{exp.title}</h1>
           <p className="share-tagline">{exp.tagline}</p>
+        </div>
+        <div className="share-level">
+          <span className="eyebrow">LEARNING LEVEL</span>
+          <span className="level-pill">{learningShortLabel(exp.learningLevel ?? "general")}</span>
         </div>
         <div className={`labels${remixed ? " stacked" : ""}`}>
           <span className="clabel over">

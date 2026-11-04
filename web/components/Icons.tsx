@@ -72,3 +72,36 @@ export const Retry = (p: Props) => (
     <path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7" />
   </Svg>
 );
+
+export const ArrowRight = (p: Props) => (
+  <Svg {...p}>
+    <path d="M4 12h15M13 5l7 7-7 7" />
+  </Svg>
+);
+
+export const Gamepad = (p: Props) => (
+  <Svg {...p}>
+    <path d="M7.5 8h9a4.5 4.5 0 0 1 4.3 3.2l1.1 3.7a2.4 2.4 0 0 1-3.8 2.6l-2.4-1.8H8.3l-2.4 1.8a2.4 2.4 0 0 1-3.8-2.6l1.1-3.7A4.5 4.5 0 0 1 7.5 8Z" />
+    <path d="M8 11v4M6 13h4M16 12h.01M18 14h.01" />
+  </Svg>
+);
+
+export const Puzzle = (p: Props) => (
+  <Svg {...p}>
+    <path d="M9 4h2a2.5 2.5 0 1 1 5 0h2a2 2 0 0 1 2 2v3h-1a2.5 2.5 0 1 0 0 5h1v4a2 2 0 0 1-2 2h-4v-1a2.5 2.5 0 1 0-5 0v1H6a2 2 0 0 1-2-2v-4h1a2.5 2.5 0 1 0 0-5H4V6a2 2 0 0 1 2-2h3Z" />
+  </Svg>
+);
+
+export const Compass = (p: Props) => (
+  <Svg {...p}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="m15.5 8.5-2 5-5 2 2-5 5-2Z" />
+  </Svg>
+);
+
+export const CircleCheck = (p: Props) => (
+  <Svg {...p}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="m8 12.5 2.5 2.5L16.5 9" />
+  </Svg>
+);

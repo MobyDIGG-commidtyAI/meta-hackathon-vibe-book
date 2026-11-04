@@ -4,6 +4,7 @@ import { chatJSON } from "@/lib/ai";
 import { fail, handle, parseDataUrl, rateLimited } from "@/lib/http";
 import { postBlock, vibeJsonSchema, VibeSchema, vibeSystem } from "@/lib/prompts";
 import { saveImage } from "@/lib/store";
+import { learningGuidance, normalizeLearningLevel } from "@/lib/learning";
 
 export const maxDuration = 60;
 
@@ -16,6 +17,7 @@ export async function POST(req: Request) {
 
     const body = await req.json();
     const caption = typeof body.caption === "string" ? body.caption.slice(0, 1500) : "";
+    const learningLevel = normalizeLearningLevel(body.learningLevel);
     const postUrl = typeof body.postUrl === "string" ? body.postUrl.slice(0, 500) : "";
     const imageDataUrl = typeof body.image === "string" && body.image.length < MAX_IMAGE_CHARS ? body.image : null;
     const image = imageDataUrl ? parseDataUrl(imageDataUrl) : null;
@@ -23,7 +25,7 @@ export async function POST(req: Request) {
 
     const { data, trace } = await chatJSON(
       "suggest",
-      { system: vibeSystem(!!image), text: postBlock(caption, postUrl), imageDataUrl: image ? imageDataUrl : null },
+      { system: vibeSystem(!!image, learningGuidance(learningLevel)), text: postBlock(caption, postUrl), imageDataUrl: image ? imageDataUrl : null },
       { name: "vibe_suggestions", json: vibeJsonSchema, zod: VibeSchema },
     );
 

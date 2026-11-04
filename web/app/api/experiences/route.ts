@@ -5,6 +5,7 @@ import { fail, handle, newEditToken, rateLimited } from "@/lib/http";
 import { ENABLED_KINDS } from "@/lib/prompts";
 import { GENRES, type Genre } from "@/lib/spec";
 import { keepImage, saveExperience, toPublic, type Experience, type Suggestion } from "@/lib/store";
+import { learningGuidance, normalizeLearningLevel } from "@/lib/learning";
 
 export const maxDuration = 300; // writing an app can take a while
 
@@ -35,7 +36,8 @@ export async function POST(req: Request) {
     const imageId = typeof body.imageId === "string" ? body.imageId : null;
     const photo = await imageDataUrl(imageId);
 
-    const built = await buildFromCard({ suggestion, scene, caption, postUrl, imageDataUrl: photo });
+    const learningLevel = normalizeLearningLevel(body.learningLevel);
+    const built = await buildFromCard({ suggestion, scene, caption, postUrl, imageDataUrl: photo, learningLevel: learningGuidance(learningLevel) });
 
     const { token, hash } = newEditToken();
     const now = Date.now();
@@ -51,6 +53,7 @@ export async function POST(req: Request) {
       imageId: photo ? imageId : null,
       source: { platform, postUrl, captionExcerpt: caption.slice(0, 280) },
       suggestion,
+      learningLevel,
       creatorName: String(body.creatorName ?? "").slice(0, 40),
       editTokenHash: hash,
       published: false,

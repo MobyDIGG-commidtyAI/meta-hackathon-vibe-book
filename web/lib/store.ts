@@ -4,6 +4,7 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import type { GameSpec, Genre } from "./spec";
 import type { TraceStep } from "./ai";
+import type { LearningLevel } from "./learning";
 
 export type Kind = "game" | "app";
 
@@ -22,6 +23,7 @@ export type Experience = {
   imageId: string | null;
   source: { platform: string; postUrl: string; captionExcerpt: string };
   suggestion: Suggestion;
+  learningLevel?: LearningLevel;
   creatorName: string;
   editTokenHash: string;
   published: boolean;
